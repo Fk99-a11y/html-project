@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>⁄—÷ «·ﬂ »</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #5D3A21;
+        }
+
+        .btn-edit {
+            background-color: #74E795;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>·ÊÕ… «· Õﬂ„ (Admin View)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>«”„ «·ﬂ «»</th>
+                <th>«·„ƒ·›</th>
+                <th>«· Õﬂ„</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td> ⁄·„ C++</td>
+                <td>√Õ„œ ⁄·Ì</td>
+                <td>
+                    <button class="btn-edit" onclick="location.href='edit_book.html'"> ⁄œÌ· Edit</button>
+                    <button class="btn-delete">Õ–› Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <hr>
+
+    <h2>⁄—÷ «·„” Œœ„ (User View)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>«”„ «·ﬂ «»</th>
+                <th>«·„ƒ·›</th>
+                <th>«·Õ«·…</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Â‰œ”… «·»—„ÃÌ« </td>
+                <td>œ. „Õ„œ</td>
+                <td style="color: green;">„ «Õ Available</td>
+            </tr>
+            <tr>
+                <td> ﬂ‰Ê·ÊÃÌ« «·ÊÌ»</td>
+                <td>”«—… „Õ„Êœ</td>
+                <td style="color: red;">€Ì— „ «Õ Not Available</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>
