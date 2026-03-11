@@ -5,33 +5,25 @@
     <title>Digital Library</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
-<body style="
-background-image: url('images/Library.png');
-background-size: cover;
-background-position: center;
-background-repeat: no-repeat;
-background-attachment: fixed;
-display: flex;
-justify-content: center;
-padding-top: 10px; 
-">
+<body>
 
-    <div style="background-color: rgb(117, 85, 0); padding: 15px; border-radius: 15px; display:inline-block; text-align:center;">
-        <span>
-            <a href="Home.html" style="color:rgb(255, 255, 255); margin:0 15px; text-decoration:none; font-size:18px; font-weight:900;">Digital Library 📖</a>
-            <a href="Loginpage.html" style="color:rgb(255, 255, 255); margin:0 15px; text-decoration:none; font-size:18px; font-weight:900;">Login</a>
-            <a href="SignUp.html" style="color:rgb(255, 255, 255); margin:0 15px; text-decoration:none; font-size:18px; font-weight:900;">Sign Up</a>
-            <a href="ViewBooks.html" style="color:rgb(255, 255, 255); margin:0 15px; text-decoration:none; font-size:18px; font-weight:900;">Books</a>
-            
-            <form action="ViewBooks.html" method="get" style="display:inline;">
-                <input type="text" name="search" placeholder="Search..." style="padding:5px 8px; font-size:14px; margin-left:15px; border-radius:6px; border:none;">
-                <button type="submit" style="background:none; border:none; color:white; cursor:pointer; margin-left:5px;">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                </button>
-            </form>
-        </span>
+    <div class="navbar">
+    
+    <a href="Home.html">Digital Library 📖</a>
+    <a href="Loginpage.html">Login</a>
+    <a href="SignUp.html">Sign Up</a>
+    <a href="Books.html">Books</a>
+    
+    <form action="Books.html" method="get" style="display:inline;">
+    <input type="text" name="search" placeholder="Search..." class="search">
+    <button type="submit" class="search-btn">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
+    </form>
+    
     </div>
-
-</body>
+    
+    </body>
 </html>
