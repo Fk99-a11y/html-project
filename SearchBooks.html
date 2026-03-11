@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Search Books</title>
+
+<style>
+
+body{
+font-family: Arial;
+background:#f4f4f4;
+}
+
+.container{
+width:80%;
+margin:auto;
+}
+
+form{
+background:white;
+padding:20px;
+border-radius:10px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+th,td{
+border:1px solid #ddd;
+padding:10px;
+text-align:center;
+}
+
+th{
+background:#5D3A21;
+color:white;
+}
+
+button{
+padding:10px 20px;
+background:#5D3A21;
+color:white;
+border:none;
+cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Search Books</h1>
+
+<form>
+
+<label>Search by Title</label>
+<input type="text" name="title" required>
+
+<br><br>
+
+<label>Search by Author</label>
+<input type="text" name="author">
+
+<br><br>
+
+<label>Category</label>
+
+<select name="category">
+
+<option>Programming</option>
+<option>Database</option>
+<option>Networking</option>
+
+</select>
+
+<br><br>
+
+<button type="submit">Search</button>
+
+</form>
+
+<h2>Search Results</h2>
+
+<table>
+
+<tr>
+<th>Book Name</th>
+<th>Author</th>
+<th>Category</th>
+<th>Status</th>
+</tr>
+
+<tr>
+<td>HTML Guide</td>
+<td>Mike</td>
+<td>Web</td>
+<td style="color:green">Available</td>
+</tr>
+
+<tr>
+<td>Database Basics</td>
+<td>John</td>
+<td>Database</td>
+<td style="color:red">Not Available</td>
+</tr>
+
+</table>
+
+</div>
+
+</body>
+</html>
