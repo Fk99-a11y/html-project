@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - Digital Library</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+      .container {
+        width: 90%;
+        margin: 50px auto;
+      }
+
+      h2 {
+        color: #5d3a21;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: center;
+      }
+
+      th {
+        background: #5d3a21;
+        color: white;
+      }
+
+      .btn-edit {
+        background-color: #74e795;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        margin-right: 5px;
+      }
+
+      .btn-delete {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+      }
+
+      .btn-edit:hover {
+        background-color: #5ac36e;
+      }
+
+      .btn-delete:hover {
+        background-color: #c82333;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <a href="Home.html">Digital Library 📖</a>
+      <a href="Loginpage.html">Login</a>
+      <a href="SignUp.html">Sign Up</a>
+      <a href="SearchBooks.html">Books</a>
+
+      <form action="SearchBooks.html" method="get" style="display: inline">
+        <input
+          type="text"
+          name="search"
+          placeholder="Search..."
+          class="search"
+        />
+        <button type="submit" class="search-btn">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </form>
+    </div>
+
+    <div class="container">
+      <h2>Admin Dashboard - Manage Books</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Book Name</th>
+            <th>Author</th>
+            <th>Category</th>
+            <th>Control</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Learn C++</td>
+            <td>Ahmead Ali</td>
+            <td>Programming</td>
+            <td>
+              <button
+                class="btn-edit"
+                onclick="location.href = 'edit_book.html'"
+              >
+                Edit
+              </button>
+              <button class="btn-delete">Delete</button>
+            </td>
+          </tr>
+          <tr>
+            <td>Software Engineering</td>
+            <td>D. Ali</td>
+            <td>Programming</td>
+            <td>
+              <button
+                class="btn-edit"
+                onclick="location.href = 'edit_book.html'"
+              >
+                Edit
+              </button>
+              <button class="btn-delete">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
