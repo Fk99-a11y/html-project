@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Dashboard - Digital Library</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+      .container {
+        width: 90%;
+        margin: 50px auto;
+      }
+
+      h2 {
+        color: #5d3a21;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: center;
+      }
+
+      th {
+        background: #5d3a21;
+        color: white;
+      }
+
+      td.available {
+        color: green;
+        font-weight: bold;
+      }
+
+      td.not-available {
+        color: red;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <a href="Home.html">Digital Library 📖</a>
+      <a href="Loginpage.html">Login</a>
+      <a href="SignUp.html">Sign Up</a>
+      <a href="SearchBooks.html">Books</a>
+
+      <form action="SearchBooks.html" method="get" style="display: inline">
+        <input
+          type="text"
+          name="search"
+          placeholder="Search..."
+          class="search"
+        />
+        <button type="submit" class="search-btn">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </form>
+    </div>
+
+    <div class="container">
+      <h2>User Dashboard - Available Books</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Book Name</th>
+            <th>Author</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Software Engineering</td>
+            <td>D. Ali</td>
+            <td class="available">Available</td>
+          </tr>
+          <tr>
+            <td>Web Technology</td>
+            <td>Sarah Mahmoud</td>
+            <td class="not-available">Not Available</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
