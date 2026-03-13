@@ -30,6 +30,7 @@ body {
   color: #ffd369;
 }
 
+
 .search {
   padding: 5px 8px;
   font-size: 14px;
@@ -46,6 +47,7 @@ body {
   font-size: 16px;
 }
 
+
 .login-card,
 .signup-card {
   background: rgba(255, 255, 255, 0.95);
@@ -56,12 +58,26 @@ body {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-.form-group input {
+
+.addbook-card {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 30px;
+  width: 350px;
+  margin: 100px auto;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
   width: 100%;
   padding: 10px;
   border-radius: 8px;
   border: 1px solid #ccc;
+  margin-bottom: 15px;
 }
+
 
 button {
   background: #5d3a21;
@@ -74,4 +90,11 @@ button {
 
 button:hover {
   background: #7a4a2a;
+}
+
+
+.form-group label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
 }
