@@ -1,48 +1,149 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up - Digital Library</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      .signup-card {
+        width: 350px;
+        background: white;
+        padding: 30px;
+        margin: 100px auto;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        text-align: center;
+      }
+      .form-group {
+        margin-bottom: 15px;
+        text-align: left;
+      }
+      .form-group label {
+        font-weight: bold;
+      }
+      .form-group input {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+      }
+      button {
+        width: 100%;
+        padding: 10px;
+        background: #5d3a21;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      button:hover {
+        background: #7a4a2a;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="signup-card">
+      <h2>Create Account</h2>
 
-<div class="signup-card">
-    <h2>Create Account</h2>
-    
-    <form action="#" method="POST" oninput='confirmPassword.setCustomValidity(confirmPassword.value != password.value ? "Passwords do not match." : "")'>
-        
+      <form id="signupForm">
         <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" placeholder="Enter username" required>
+          <label for="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            required
+            placeholder="Enter username"
+          />
         </div>
 
         <div class="form-group">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" name="email" 
-                   placeholder="name@example.com" 
-                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" 
-                   required title="Please enter a valid email address.">
+          <label for="email">Email Address</label>
+          <input
+            type="email"
+            id="email"
+            required
+            placeholder="name@example.com"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+            title="Please enter a valid email address."
+          />
         </div>
 
         <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" minlength="6" placeholder="At least 6 characters" required>
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            minlength="6"
+            required
+            placeholder="At least 6 characters"
+          />
         </div>
 
         <div class="form-group">
-            <label for="confirmPassword">Confirm Password</label>
-            <input type="password" id="confirmPassword" name="confirmPassword" required>
+          <label for="confirmPassword">Confirm Password</label>
+          <input
+            type="password"
+            id="confirmPassword"
+            required
+            placeholder="Confirm your password"
+          />
         </div>
 
         <div class="form-group admin-group">
-            <input type="checkbox" id="isAdmin" name="isAdmin">
-            <label for="isAdmin">Register as Admin</label>
+          <input type="checkbox" id="isAdmin" />
+          <label for="isAdmin">Register as Admin</label>
         </div>
 
         <button type="submit">Sign Up</button>
-    </form>
-</div>
+      </form>
+    </div>
 
-</body>
+    <script>
+      const form = document.getElementById("signupForm");
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const username = document.getElementById("username").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const password = document.getElementById("password").value;
+        const confirmPassword =
+          document.getElementById("confirmPassword").value;
+        const isAdmin = document.getElementById("isAdmin").checked;
+
+        if (password !== confirmPassword) {
+          alert("Passwords do not match!");
+          return;
+        }
+
+        let users = JSON.parse(localStorage.getItem("users")) || [];
+
+        const exists = users.find((user) => user.email === email);
+        if (exists) {
+          alert("This email already exists!");
+          return;
+        }
+
+        const newUser = {
+          username: username,
+          email: email,
+          password: password,
+          role: isAdmin ? "admin" : "user",
+        };
+
+        users.push(newUser);
+        localStorage.setItem("users", JSON.stringify(users));
+
+        alert("Account created successfully 🎉");
+
+        // حفظ اليوزر الأخير كـ loggedInUser مؤقتًا لاستخدامه في Login
+        localStorage.setItem("lastSignedUpUser", JSON.stringify(newUser));
+
+        window.location.href = "Loginpage.html";
+      });
+    </script>
+  </body>
 </html>
