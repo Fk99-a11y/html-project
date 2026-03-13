@@ -1,8 +1,70 @@
-<script>
-  const user = JSON.parse(localStorage.getItem("loggedInUser"));
+<!DOCTYPE html>
+<html>
 
-  if (!user) {
-    alert("Please login first!");
-    window.location.href = "Loginpage.html";
-  }
-</script>
+<head>
+  <title>Add Book</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+
+  <script>
+    const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    if (!user) {
+      alert("Please login first!");
+      window.location.href = "Loginpage.html";
+    }
+  </script>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <a href="Homepage.html">Home</a>
+    <a href="AddBook.html">Add Book</a>
+    <a href="ViewBooks.html">View Books</a>
+    <a href="Loginpage.html">Logout</a>
+  </div>
+
+  <!-- Add Book Form -->
+  <div class="addbook-card">
+    <h2>Add New Book</h2>
+    <form action="#">
+      <div class="form-group">
+        <label>Book ID</label>
+        <input type="number" placeholder="Enter Book ID" required>
+      </div>
+
+      <div class="form-group">
+        <label>Book Name</label>
+        <input type="text" placeholder="Enter Book Name" required>
+      </div>
+
+      <div class="form-group">
+        <label>Author</label>
+        <input type="text" placeholder="Enter Author Name" required>
+      </div>
+
+      <div class="form-group">
+        <label>Category</label>
+        <select required>
+          <option value="">Select Category</option>
+          <option>Fiction</option>
+          <option>Non-Fiction</option>
+          <option>Sci-Fi</option>
+          <option>Technology</option>
+          <option>History</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <textarea rows="4" placeholder="Enter Book Description" required></textarea>
+      </div>
+
+      <button type="submit">Add Book</button>
+    </form>
+  </div>
+
+</body>
+
+</html>
