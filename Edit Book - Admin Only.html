@@ -1,35 +1,60 @@
+<script>
+  const user = JSON.parse(localStorage.getItem("loggedInUser"));
+
+  if (!user) {
+    alert("Please login first!");
+    window.location.href = "Loginpage.html";
+  }
+</script>
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Book edit</title>
     <style>
-        .form-container { max-width: 400px; margin: 20px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
-        input, select { width: 100%; padding: 10px; margin: 10px 0; display: block; }
-        .btn-save { background-color: #28a745; color: white; border: none; width: 100%; padding: 10px; cursor: pointer; }
+      .form-container {
+        max-width: 400px;
+        margin: 20px auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+      }
+      input,
+      select {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        display: block;
+      }
+      .btn-save {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        width: 100%;
+        padding: 10px;
+        cursor: pointer;
+      }
     </style>
-</head>
-<body>
-
+  </head>
+  <body>
     <div class="form-container">
-        <h2>Edit book data</h2>
-        <form>
-            <label>Name Book:</label>
-            <input type="text" value="Learn C++" required>
+      <h2>Edit book data</h2>
+      <form>
+        <label>Name Book:</label>
+        <input type="text" value="Learn C++" required />
 
-            <label>author:</label>
-            <input type="text" value="Ahmead Ali" required>
+        <label>author:</label>
+        <input type="text" value="Ahmead Ali" required />
 
-            <label>Classification:</label>
-            <select>
-                <option selected>programming</option>
-                <option>sciences</option>
-                <option>Novels</option>
-            </select>
+        <label>Classification:</label>
+        <select>
+          <option selected>programming</option>
+          <option>sciences</option>
+          <option>Novels</option>
+        </select>
 
-            <button type="submit" class="btn-save">Save changes</button>
-        </form>
+        <button type="submit" class="btn-save">Save changes</button>
+      </form>
     </div>
-
-</body>
+  </body>
 </html>
