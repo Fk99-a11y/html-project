@@ -4,57 +4,122 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login - Digital Library</title>
-    <link rel="stylesheet" href="style.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
     <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Arial;
+        background-image: url("images/Library.png");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        min-height: 100vh;
+        color: #333;
+      }
+
+      .navbar {
+        background: rgba(93, 58, 33, 0.85);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        color: #fff;
+        flex-wrap: wrap;
+      }
+
+      .navbar a {
+        color: white;
+        text-decoration: none;
+        margin-left: 15px;
+        font-weight: bold;
+      }
+
+      .navbar a:hover {
+        text-decoration: underline;
+      }
+
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .user-info img {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        border: 2px solid #f1c40f;
+        display: none;
+      }
+
       .login-card {
         width: 350px;
-        background: white;
+        background: rgba(255, 255, 255, 0.95);
         padding: 30px;
         margin: 100px auto;
         border-radius: 15px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
         text-align: center;
       }
+
       .login-card h2 {
         margin-bottom: 20px;
         color: #5d3a21;
       }
+
       .form-group {
         margin-bottom: 15px;
         text-align: left;
       }
+
       .form-group label {
         font-weight: bold;
       }
+
       .form-group input {
         width: 100%;
         padding: 10px;
         margin-top: 5px;
         border-radius: 8px;
         border: 1px solid #ccc;
+        box-sizing: border-box;
       }
+
       .login-btn {
         width: 100%;
-        padding: 10px;
+        padding: 12px;
         background: #5d3a21;
         color: white;
         border: none;
         border-radius: 8px;
         cursor: pointer;
         font-size: 16px;
+        font-weight: bold;
+        transition: 0.3s;
       }
+
       .login-btn:hover {
         background: #7a4a2a;
+        transform: translateY(-2px);
       }
+
       .signup-link {
         margin-top: 15px;
         display: block;
         color: #5d3a21;
         text-decoration: none;
+        font-weight: bold;
       }
+
       .signup-link:hover {
         text-decoration: underline;
       }
+
       #error-msg {
         color: red;
         margin-bottom: 10px;
@@ -62,27 +127,29 @@
       }
     </style>
   </head>
+
   <body>
     <div class="navbar">
-      <a href="Home.html">Digital Library 📖</a>
-      <a href="Loginpage.html">Login</a>
-      <a href="SignUp.html">Sign Up</a>
-      <a href="SearchBooks.html">Books</a>
-      <form action="SearchBooks.html" method="get" style="display: inline">
-        <input
-          type="text"
-          name="search"
-          placeholder="Search..."
-          class="search"
-        />
-        <button type="submit" class="search-btn">
-          <i class="fa-solid fa-magnifying-glass"></i>
-        </button>
-      </form>
+      <div class="nav-left">
+        <a href="Home.html">Digital Library 📖</a>
+
+        <a href="SearchBooks.html">Books</a>
+
+        <a href="SignUp.html">Sign Up</a>
+      </div>
+
+      <div class="user-info">
+        <img src="images/avatar1.png" id="userAvatar" />
+
+        <span id="usernameDisplay">Welcome, Guest</span>
+
+        <a href="#" id="logoutLink" style="display: none">Logout</a>
+      </div>
     </div>
 
     <div class="login-card">
       <h2>Login</h2>
+
       <div id="error-msg"></div>
 
       <form id="loginForm">
@@ -107,39 +174,50 @@
         </div>
 
         <button type="submit" class="login-btn">Login</button>
-        <a href="SignUp.html" class="signup-link"
-          >Don't have an account? Sign Up</a
-        >
+
+        <a href="SignUp.html" class="signup-link">
+          Don't have an account? Sign Up
+        </a>
       </form>
     </div>
 
     <script>
-      // جلب كل المستخدمين المخزنين في localStorage
       const accounts = JSON.parse(localStorage.getItem("users")) || [];
+
+      const usernameDisplay = document.getElementById("usernameDisplay");
+      const userAvatar = document.getElementById("userAvatar");
+      const logoutLink = document.getElementById("logoutLink");
 
       document
         .getElementById("loginForm")
         .addEventListener("submit", function (e) {
           e.preventDefault();
+
           const email = document.getElementById("email").value.trim();
           const password = document.getElementById("password").value;
+
           const errorMsg = document.getElementById("error-msg");
 
-          // البحث عن المستخدم اللي دخل ايميله وكلمة المرور
           const user = accounts.find(
             (acc) => acc.email === email && acc.password === password,
           );
 
           if (user) {
-            // مسح أي رسالة خطأ سابقة
             errorMsg.style.display = "none";
 
-            // تخزين المستخدم اللي دخل
             localStorage.setItem("loggedInUser", JSON.stringify(user));
 
-            // تحويله على حسب دوره
+            usernameDisplay.textContent = "Welcome, " + user.username;
+
+            if (user.avatar) {
+              userAvatar.src = user.avatar;
+            }
+
+            userAvatar.style.display = "inline";
+            logoutLink.style.display = "inline";
+
             if (user.role === "admin") {
-              window.location.href = "AdminView.html";
+              window.location.href = "ViewBook.html";
             } else {
               window.location.href = "UserView.html";
             }
@@ -148,6 +226,18 @@
             errorMsg.textContent = "Login Failed: Invalid email or password!";
           }
         });
+
+      logoutLink.addEventListener("click", () => {
+        localStorage.removeItem("loggedInUser");
+
+        userAvatar.style.display = "none";
+
+        logoutLink.style.display = "none";
+
+        usernameDisplay.textContent = "Welcome, Guest";
+
+        window.location.href = "Loginpage.html";
+      });
     </script>
   </body>
 </html>
