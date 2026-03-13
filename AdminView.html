@@ -5,13 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin Dashboard - Digital Library</title>
     <link rel="stylesheet" href="style.css" />
-<<<<<<< HEAD
-
-    <style>
-      .container {
-        width: 90%;
-        margin: 50px auto;
-=======
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -87,7 +80,6 @@
         padding: 30px;
         border-radius: 15px;
         box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
->>>>>>> ef16c33 (Updated Home, Login, SignUp, UserView, AdminView, SearchBooks and style)
       }
 
       h2 {
@@ -99,10 +91,7 @@
       table {
         width: 100%;
         border-collapse: collapse;
-<<<<<<< HEAD
-=======
         background: #fff;
->>>>>>> ef16c33 (Updated Home, Login, SignUp, UserView, AdminView, SearchBooks and style)
       }
 
       th,
@@ -110,10 +99,7 @@
         border: 1px solid #ddd;
         padding: 10px;
         text-align: center;
-<<<<<<< HEAD
-=======
         color: #333;
->>>>>>> ef16c33 (Updated Home, Login, SignUp, UserView, AdminView, SearchBooks and style)
       }
 
       th {
@@ -127,10 +113,7 @@
         padding: 5px 10px;
         cursor: pointer;
         margin-right: 5px;
-<<<<<<< HEAD
-=======
         border-radius: 5px;
->>>>>>> ef16c33 (Updated Home, Login, SignUp, UserView, AdminView, SearchBooks and style)
       }
 
       .btn-delete {
@@ -139,10 +122,7 @@
         border: none;
         padding: 5px 10px;
         cursor: pointer;
-<<<<<<< HEAD
-=======
         border-radius: 5px;
->>>>>>> ef16c33 (Updated Home, Login, SignUp, UserView, AdminView, SearchBooks and style)
       }
 
       .btn-edit:hover {
@@ -155,16 +135,6 @@
     </style>
   </head>
   <body>
-<<<<<<< HEAD
-    <div class="navbar">
-      <a href="Home.html">Digital Library 📖</a>
-      <a href="Loginpage.html">Login</a>
-      <a href="SignUp.html">Sign Up</a>
-      <a href="SearchBooks.html">Books</a>
-
-      <form action="SearchBooks.html" method="get" style="display: inline">
-=======
-    <!-- Navbar -->
     <div class="navbar">
       <div class="nav-left">
         <a href="Home.html">Digital Library 📖</a>
@@ -176,27 +146,19 @@
       <div class="username" id="usernameDisplay">Welcome, Guest</div>
 
       <form action="SearchBooks.html" method="get">
->>>>>>> ef16c33 (Updated Home, Login, SignUp, UserView, AdminView, SearchBooks and style)
         <input
           type="text"
           name="search"
           placeholder="Search..."
           class="search"
         />
-<<<<<<< HEAD
-        <button type="submit" class="search-btn">
-=======
         <button type="submit">
->>>>>>> ef16c33 (Updated Home, Login, SignUp, UserView, AdminView, SearchBooks and style)
           <i class="fa-solid fa-magnifying-glass"></i>
         </button>
       </form>
     </div>
 
-<<<<<<< HEAD
-=======
-
->>>>>>> ef16c33 (Updated Home, Login, SignUp, UserView, AdminView, SearchBooks and style)
+    <!-- Main Container -->
     <div class="container">
       <h2>Admin Dashboard - Manage Books</h2>
 
@@ -241,11 +203,8 @@
         </tbody>
       </table>
     </div>
-<<<<<<< HEAD
-=======
 
     <script>
-      // تحقق من تسجيل الدخول
       const user = JSON.parse(localStorage.getItem("loggedInUser"));
       const loginLink = document.getElementById("loginLink");
       const signupLink = document.getElementById("signupLink");
@@ -261,7 +220,6 @@
         signupLink.style.display = "none";
         logoutLink.style.display = "inline";
 
-       
         if (user.role !== "admin") {
           alert("Access denied! Only admins can enter.");
           window.location.href = "Home.html";
@@ -273,6 +231,5 @@
         window.location.href = "Loginpage.html";
       });
     </script>
->>>>>>> ef16c33 (Updated Home, Login, SignUp, UserView, AdminView, SearchBooks and style)
   </body>
 </html>
