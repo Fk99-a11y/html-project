@@ -16,11 +16,10 @@
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-        color: #fff;
+        color: #333;
         min-height: 100vh;
       }
 
-      /* Navbar */
       .navbar {
         background: rgba(93, 58, 33, 0.85);
         display: flex;
@@ -28,6 +27,7 @@
         align-items: center;
         padding: 15px 20px;
         flex-wrap: wrap;
+        color: #fff;
       }
 
       .navbar a {
@@ -41,32 +41,19 @@
         text-decoration: underline;
       }
 
-      .navbar .username {
-        font-weight: bold;
-        color: #f1c40f;
-      }
-
-      .navbar form {
+      .user-info {
         display: flex;
+        align-items: center;
+        gap: 10px;
       }
 
-      .navbar input[type="text"] {
-        padding: 5px 10px;
-        border-radius: 5px 0 0 5px;
-        border: none;
-        outline: none;
+      .user-info img {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        border: 2px solid #f1c40f;
       }
 
-      .navbar button {
-        padding: 5px 10px;
-        border-radius: 0 5px 5px 0;
-        border: none;
-        background: #7a4a2a;
-        color: white;
-        cursor: pointer;
-      }
-
-      /* Container */
       .container {
         max-width: 1000px;
         margin: 50px auto;
@@ -89,7 +76,8 @@
         background: #fff;
       }
 
-      th, td {
+      th,
+      td {
         border: 1px solid #ddd;
         padding: 12px;
         text-align: center;
@@ -100,7 +88,6 @@
         color: white;
       }
 
-      /* تنسيق رابط اسم الكتاب */
       .book-link {
         text-decoration: none;
         color: #5d3a21;
@@ -135,8 +122,12 @@
         font-weight: bold;
       }
 
-      .btn-edit:hover { background-color: #5ac36e; }
-      .btn-delete:hover { background-color: #c82333; }
+      .btn-edit:hover {
+        background-color: #5ac36e;
+      }
+      .btn-delete:hover {
+        background-color: #c82333;
+      }
     </style>
   </head>
   <body>
@@ -144,11 +135,16 @@
       <div class="nav-left">
         <a href="Home.html">Digital Library 📖</a>
         <a href="SearchBooks.html">Books</a>
-        <a href="Loginpage.html" id="loginLink">Login</a>
-        <a href="SignUp.html" id="signupLink">Sign Up</a>
+      </div>
+      <div class="user-info">
+        <img
+          src="images/default-avatar.png"
+          id="userAvatar"
+          alt="User Avatar"
+        />
+        <span id="usernameDisplay">Welcome, Guest</span>
         <a href="#" id="logoutLink" style="display: none">Logout</a>
       </div>
-      <div class="username" id="usernameDisplay">Welcome, Guest</div>
 
       <form action="SearchBooks.html" method="get">
         <input type="text" name="search" placeholder="Search..." />
@@ -160,7 +156,6 @@
 
     <div class="container">
       <h2>Admin Dashboard - Manage Books</h2>
-
       <table>
         <thead>
           <tr>
@@ -170,47 +165,32 @@
             <th>Control</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td><a href="search.html" class="book-link">Learn C++</a></td>
-            <td>Ahmed Ali</td>
-            <td>Programming</td>
-            <td>
-              <button class="btn-edit" onclick="location.href = 'Edit Book.html'">
-                Edit
-              </button>
-              <button class="btn-delete">Delete</button>
-            </td>
-          </tr>
-          <tr>
-            <td><a href="search.html" class="book-link">Software Engineering</a></td>
-            <td>D. Ali</td>
-            <td>Programming</td>
-            <td>
-              <button class="btn-edit" onclick="location.href = 'EditBook.html'">
-                Edit
-              </button>
-              <button class="btn-delete">Delete</button>
-            </td>
-          </tr>
-        </tbody>
+        <tbody id="booksTableBody"></tbody>
       </table>
     </div>
 
     <script>
       const user = JSON.parse(localStorage.getItem("loggedInUser"));
-      const loginLink = document.getElementById("loginLink");
-      const signupLink = document.getElementById("signupLink");
-      const logoutLink = document.getElementById("logoutLink");
       const usernameDisplay = document.getElementById("usernameDisplay");
+      const userAvatar = document.getElementById("userAvatar");
+      const logoutLink = document.getElementById("logoutLink");
+      const booksTableBody = document.getElementById("booksTableBody");
+
+      const books = [
+        { name: "Learn C++", author: "Ahmed Ali", category: "Programming" },
+        {
+          name: "Software Engineering",
+          author: "D. Ali",
+          category: "Programming",
+        },
+      ];
 
       if (!user) {
         alert("Please login first!");
         window.location.href = "Loginpage.html";
       } else {
-        usernameDisplay.textContent = "Welcome, " + user.username;
-        loginLink.style.display = "none";
-        signupLink.style.display = "none";
+        usernameDisplay.textContent = user.username;
+        if (user.avatar) userAvatar.src = user.avatar;
         logoutLink.style.display = "inline";
 
         if (user.role !== "admin") {
@@ -219,9 +199,47 @@
         }
       }
 
-      logoutLink.addEventListener("click", function () {
+      logoutLink.addEventListener("click", () => {
         localStorage.removeItem("loggedInUser");
         window.location.href = "Loginpage.html";
+      });
+
+      books.forEach((book) => {
+        const tr = document.createElement("tr");
+
+        const tdName = document.createElement("td");
+        const link = document.createElement("a");
+        link.href = "search.html";
+        link.textContent = book.name;
+        link.className = "book-link";
+        tdName.appendChild(link);
+
+        const tdAuthor = document.createElement("td");
+        tdAuthor.textContent = book.author;
+
+        const tdCategory = document.createElement("td");
+        tdCategory.textContent = book.category;
+
+        const tdControl = document.createElement("td");
+        const editBtn = document.createElement("button");
+        editBtn.className = "btn-edit";
+        editBtn.textContent = "Edit";
+        editBtn.onclick = () => alert(`Edit ${book.name}`);
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.className = "btn-delete";
+        deleteBtn.textContent = "Delete";
+        deleteBtn.onclick = () => alert(`Delete ${book.name}`);
+
+        tdControl.appendChild(editBtn);
+        tdControl.appendChild(deleteBtn);
+
+        tr.appendChild(tdName);
+        tr.appendChild(tdAuthor);
+        tr.appendChild(tdCategory);
+        tr.appendChild(tdControl);
+
+        booksTableBody.appendChild(tr);
       });
     </script>
   </body>
