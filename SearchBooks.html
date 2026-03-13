@@ -1,27 +1,36 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <title>Search Books - Digital Library</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
     <style>
       body {
-        font-family: Arial, sans-serif;
+        font-family: "Segoe UI", Arial;
         margin: 0;
         padding: 0;
-
         background-image: url("images/Library.png");
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
+        min-height: 100vh;
+        color: #333;
       }
 
       .navbar {
-        background: rgba(93, 58, 33, 0.9);
-        color: white;
-        padding: 15px 20px;
+        background: rgba(93, 58, 33, 0.85);
         display: flex;
         justify-content: space-between;
         align-items: center;
+        padding: 15px 20px;
+        flex-wrap: wrap;
+        color: #fff;
       }
 
       .navbar a {
@@ -35,8 +44,18 @@
         text-decoration: underline;
       }
 
-      .navbar .username {
-        font-weight: bold;
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .user-info img {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        border: 2px solid #f1c40f;
+        display: none;
       }
 
       .container {
@@ -114,14 +133,22 @@
       }
     </style>
   </head>
+
   <body>
     <div class="navbar">
       <div>
-        Digital Library 📖
+        <a href="Home.html">Digital Library 📖</a>
         <a href="SearchBooks.html">Books</a>
-        <a href="UserView.html">Home</a>
+        <a href="UserView.html">Dashboard</a>
       </div>
-      <div class="username" id="usernameDisplay">Welcome, Guest</div>
+
+      <div class="user-info">
+        <img src="images/avatar1.png" id="userAvatar" />
+
+        <span id="usernameDisplay">Welcome, Guest</span>
+
+        <a href="#" id="logoutLink" style="display: none">Logout</a>
+      </div>
     </div>
 
     <div class="container">
@@ -129,23 +156,14 @@
 
       <form id="searchForm">
         <label for="title">Title:</label>
-        <input
-          type="text"
-          name="title"
-          id="title"
-          placeholder="Enter book title"
-        />
+        <input type="text" id="title" placeholder="Enter book title" />
 
         <label for="author">Author:</label>
-        <input
-          type="text"
-          name="author"
-          id="author"
-          placeholder="Enter author name"
-        />
+        <input type="text" id="author" placeholder="Enter author name" />
 
         <label for="category">Category:</label>
-        <select name="category" id="category">
+
+        <select id="category">
           <option value="">All</option>
           <option value="Programming">Programming</option>
           <option value="Database">Database</option>
@@ -182,23 +200,44 @@
     </div>
 
     <script>
-      const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-      if (loggedInUser) {
-        document.getElementById("usernameDisplay").textContent =
-          "Welcome, " + loggedInUser.username;
+      const user = JSON.parse(localStorage.getItem("loggedInUser"));
+
+      const usernameDisplay = document.getElementById("usernameDisplay");
+      const userAvatar = document.getElementById("userAvatar");
+      const logoutLink = document.getElementById("logoutLink");
+
+      if (user) {
+        usernameDisplay.textContent = "Welcome, " + user.username;
+
+        if (user.avatar) {
+          userAvatar.src = user.avatar;
+        }
+
+        userAvatar.style.display = "inline";
+
+        logoutLink.style.display = "inline";
       }
+
+      logoutLink.addEventListener("click", function () {
+        localStorage.removeItem("loggedInUser");
+
+        window.location.href = "Loginpage.html";
+      });
 
       document
         .getElementById("searchForm")
         .addEventListener("submit", function (e) {
           e.preventDefault();
+
           const title = document.getElementById("title").value.toLowerCase();
           const author = document.getElementById("author").value.toLowerCase();
           const category = document.getElementById("category").value;
 
           const rows = document.querySelectorAll("#booksTable tr");
+
           rows.forEach((row, index) => {
             if (index === 0) return;
+
             const tName = row.cells[0].textContent.toLowerCase();
             const tAuthor = row.cells[1].textContent.toLowerCase();
             const tCategory = row.cells[2].textContent;
