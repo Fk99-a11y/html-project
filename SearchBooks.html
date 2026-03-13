@@ -1,118 +1,226 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Search Books</title>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Search Books - Digital Library</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        /* الخلفية صورة */
+        background-image: url("images/Library.png"); /* حطي اسم الصورة هنا */
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
 
-<style>
+      /* Navbar */
+      .navbar {
+        background: rgba(93, 58, 33, 0.9); /* شبه شفاف */
+        color: white;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
 
-body{
-font-family: Arial;
-background:#f4f4f4;
-}
+      .navbar a {
+        color: white;
+        text-decoration: none;
+        margin-left: 15px;
+        font-weight: bold;
+      }
 
-.container{
-width:80%;
-margin:auto;
-}
+      .navbar a:hover {
+        text-decoration: underline;
+      }
 
-form{
-background:white;
-padding:20px;
-border-radius:10px;
-}
+      .navbar .username {
+        font-weight: bold;
+      }
 
-table{
-width:100%;
-border-collapse:collapse;
-margin-top:20px;
-}
+      /* Container */
+      .container {
+        width: 80%;
+        margin: 30px auto;
+      }
 
-th,td{
-border:1px solid #ddd;
-padding:10px;
-text-align:center;
-}
+      /* Form */
+      form {
+        background: rgba(255, 255, 255, 0.95); /* شفاف قليلًا */
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        align-items: flex-end;
+      }
 
-th{
-background:#5D3A21;
-color:white;
-}
+      form label {
+        font-weight: bold;
+        width: 100%;
+      }
 
-button{
-padding:10px 20px;
-background:#5D3A21;
-color:white;
-border:none;
-cursor:pointer;
-}
+      form input,
+      form select {
+        padding: 8px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        flex: 1 1 200px;
+      }
 
-</style>
+      form button {
+        padding: 10px 20px;
+        background: #5d3a21;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
 
-</head>
+      form button:hover {
+        background: #7a4a2a;
+      }
 
-<body>
+      /* Table */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      }
 
-<div class="container">
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: center;
+      }
 
-<h1>Search Books</h1>
+      th {
+        background: #5d3a21;
+        color: white;
+      }
 
-<form>
+      td.available {
+        color: green;
+        font-weight: bold;
+      }
 
-<label>Search by Title</label>
-<input type="text" name="title" required>
+      td.not-available {
+        color: red;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <div class="navbar">
+      <div>
+        Digital Library 📖
+        <a href="SearchBooks.html">Books</a>
+        <a href="UserView.html">Home</a>
+      </div>
+      <div class="username" id="usernameDisplay">Welcome, Guest</div>
+    </div>
 
-<br><br>
+    <div class="container">
+      <h1>Search Books</h1>
 
-<label>Search by Author</label>
-<input type="text" name="author">
+      <form id="searchForm">
+        <label for="title">Title:</label>
+        <input
+          type="text"
+          name="title"
+          id="title"
+          placeholder="Enter book title"
+        />
 
-<br><br>
+        <label for="author">Author:</label>
+        <input
+          type="text"
+          name="author"
+          id="author"
+          placeholder="Enter author name"
+        />
 
-<label>Category</label>
+        <label for="category">Category:</label>
+        <select name="category" id="category">
+          <option value="">All</option>
+          <option value="Programming">Programming</option>
+          <option value="Database">Database</option>
+          <option value="Networking">Networking</option>
+        </select>
 
-<select name="category">
+        <button type="submit">Search</button>
+      </form>
 
-<option>Programming</option>
-<option>Database</option>
-<option>Networking</option>
+      <h2>Search Results</h2>
 
-</select>
+      <table id="booksTable">
+        <tr>
+          <th>Book Name</th>
+          <th>Author</th>
+          <th>Category</th>
+          <th>Status</th>
+        </tr>
 
-<br><br>
+        <tr>
+          <td>HTML Guide</td>
+          <td>Mike</td>
+          <td>Programming</td>
+          <td class="available">Available</td>
+        </tr>
 
-<button type="submit">Search</button>
+        <tr>
+          <td>Database Basics</td>
+          <td>John</td>
+          <td>Database</td>
+          <td class="not-available">Not Available</td>
+        </tr>
+      </table>
+    </div>
 
-</form>
+    <script>
+      // اظهار اسم اليوزر اللي سجل دخول
+      const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+      if (loggedInUser) {
+        document.getElementById("usernameDisplay").textContent =
+          "Welcome, " + loggedInUser.username;
+      }
 
-<h2>Search Results</h2>
+      // فلترة البحث
+      document
+        .getElementById("searchForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const title = document.getElementById("title").value.toLowerCase();
+          const author = document.getElementById("author").value.toLowerCase();
+          const category = document.getElementById("category").value;
 
-<table>
+          const rows = document.querySelectorAll("#booksTable tr");
+          rows.forEach((row, index) => {
+            if (index === 0) return;
+            const tName = row.cells[0].textContent.toLowerCase();
+            const tAuthor = row.cells[1].textContent.toLowerCase();
+            const tCategory = row.cells[2].textContent;
 
-<tr>
-<th>Book Name</th>
-<th>Author</th>
-<th>Category</th>
-<th>Status</th>
-</tr>
-
-<tr>
-<td>HTML Guide</td>
-<td>Mike</td>
-<td>Web</td>
-<td style="color:green">Available</td>
-</tr>
-
-<tr>
-<td>Database Basics</td>
-<td>John</td>
-<td>Database</td>
-<td style="color:red">Not Available</td>
-</tr>
-
-</table>
-
-</div>
-
-</body>
+            if (
+              (title && !tName.includes(title)) ||
+              (author && !tAuthor.includes(author)) ||
+              (category && tCategory !== category)
+            ) {
+              row.style.display = "none";
+            } else {
+              row.style.display = "";
+            }
+          });
+        });
+    </script>
+  </body>
 </html>
