@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> ef16c33 (Updated Home, Login, SignUp, UserView, AdminView, SearchBooks and style)
 body {
   background-image: url("images/Library.png");
   background-size: cover;
@@ -10,8 +13,11 @@ body {
   font-family: Arial, sans-serif;
 }
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> ef16c33 (Updated Home, Login, SignUp, UserView, AdminView, SearchBooks and style)
 .navbar {
   background-color: rgb(117, 85, 0);
   padding: 15px 30px;
@@ -22,8 +28,11 @@ body {
   box-sizing: border-box;
 }
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> ef16c33 (Updated Home, Login, SignUp, UserView, AdminView, SearchBooks and style)
 .navbar a {
   color: white;
   margin: 0 10px;
@@ -36,7 +45,10 @@ body {
   color: #ffd369;
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> ef16c33 (Updated Home, Login, SignUp, UserView, AdminView, SearchBooks and style)
 .search {
   padding: 5px 8px;
   font-size: 14px;
@@ -52,3 +64,35 @@ body {
   margin-left: 5px;
   font-size: 16px;
 }
+<<<<<<< HEAD
+=======
+.login-card,
+.signup-card {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 30px;
+  width: 350px;
+  margin: 100px auto;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+button {
+  background: #5d3a21;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #7a4a2a;
+}
+>>>>>>> ef16c33 (Updated Home, Login, SignUp, UserView, AdminView, SearchBooks and style)
