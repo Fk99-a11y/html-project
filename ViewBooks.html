@@ -1,14 +1,17 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Library Books</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-    body {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Library Books - Admin</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      body {
         margin: 0;
-        padding: 0;
-        font-family: 'Segoe UI', Arial, sans-serif;
+        font-family: "Segoe UI", Arial, sans-serif;
         background-image: url("images/Library.png");
         background-size: cover;
         background-position: center;
@@ -16,182 +19,255 @@
         background-attachment: fixed;
         min-height: 100vh;
         color: #333;
-    }
+      }
 
-    /* Navbar */
-    .navbar {
-        background: rgba(93, 58, 33, 0.9);
+      .navbar {
+        background: rgba(93, 58, 33, 0.85);
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 15px 25px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        padding: 15px 20px;
         position: sticky;
         top: 0;
         z-index: 100;
         color: #fff;
-    }
+      }
 
-    .navbar a {
+      .navbar a {
         color: white;
         text-decoration: none;
         margin-left: 15px;
         font-weight: bold;
-    }
+      }
 
-    .navbar a:hover {
+      .navbar a:hover {
         text-decoration: underline;
-    }
+      }
 
-    .navbar .user-info {
+      .user-info {
         display: flex;
         align-items: center;
         gap: 10px;
-        font-weight: bold;
-    }
+      }
 
-    .navbar .user-info img {
+      .user-info img {
         width: 35px;
         height: 35px;
         border-radius: 50%;
         border: 2px solid #f1c40f;
-    }
+      }
 
-    /* Table */
-    table {
-        width: 90%;
-        margin: 30px auto;
+      .container {
+        max-width: 900px;
+        margin: 50px auto;
+        padding: 20px;
+      }
+
+      h2 {
+        text-align: center;
+        color: #5d3a21;
+        margin-bottom: 20px;
+      }
+
+      table {
+        width: 100%;
         border-collapse: collapse;
-        background: rgba(255,255,255,0.95);
+        background: rgba(255, 255, 255, 0.95);
         border-radius: 10px;
         overflow: hidden;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-    }
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      }
 
-    th, td {
+      th,
+      td {
         border: 1px solid #ddd;
-        padding: 10px;
+        padding: 12px;
         text-align: center;
-    }
+      }
 
-    th {
+      th {
         background-color: #5d3a21;
         color: white;
-    }
+      }
 
-    .btn-edit {
-        background-color: #74e795;
+      .btn-edit {
+        background: #74e795;
         border: none;
         padding: 5px 10px;
         cursor: pointer;
         border-radius: 5px;
-    }
+        margin-right: 5px;
+        transition: 0.3s;
+      }
 
-    .btn-delete {
-        background-color: #dc3545;
+      .btn-edit:hover {
+        background: #28a745;
+        transform: translateY(-2px);
+      }
+
+      .btn-delete {
+        background: #dc3545;
         color: white;
         border: none;
         padding: 5px 10px;
         cursor: pointer;
         border-radius: 5px;
-    }
+        transition: 0.3s;
+      }
 
-    .status-available { color: green; font-weight: bold; }
-    .status-not { color: red; font-weight: bold; }
-</style>
-</head>
-<body>
+      .btn-delete:hover {
+        background: #a71d2a;
+        transform: translateY(-2px);
+      }
 
-<div class="navbar">
-    <div class="nav-left">
+      .status-available {
+        color: green;
+        font-weight: bold;
+      }
+      .status-not {
+        color: red;
+        font-weight: bold;
+      }
+
+      .add-btn {
+        background: #5d3a21;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-bottom: 15px;
+        transition: 0.3s;
+      }
+
+      .add-btn:hover {
+        background: #7a4a2a;
+        transform: translateY(-2px);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="nav-left">
         <a href="Home.html">Digital Library 📖</a>
         <a href="SearchBooks.html">Books</a>
+      </div>
+      <div class="user-info">
+        <img
+          src="images/default-avatar.png"
+          id="userAvatar"
+          alt="User Avatar"
+        />
+        <span id="usernameDisplay">Admin</span>
+        <a href="#" id="logoutLink" style="display: none">Logout</a>
+      </div>
     </div>
-    <div class="user-info" id="userInfo">
-        <img src="images/default-avatar.png" alt="User Avatar" id="userAvatar">
-        <span id="usernameDisplay">Welcome, Guest</span>
-        <a href="#" id="logoutLink" style="display:none;">Logout</a>
-    </div>
-</div>
 
-<h2 style="text-align:center;">Books List</h2>
+    <div class="container">
+      <h2>Admin Dashboard - Books List</h2>
+      <button class="add-btn" id="addBookBtn">+ Add New Book</button>
 
-<table id="booksTable">
-    <thead>
-        <tr>
-            <th>Book name</th>
+      <table id="booksTable">
+        <thead>
+          <tr>
+            <th>Book Name</th>
             <th>Author</th>
-            <th id="controlHeader">Status / Control</th>
-        </tr>
-    </thead>
-    <tbody>
-        <!-- سيتم تعبئته بالـ JS -->
-    </tbody>
-</table>
+            <th>Status / Control</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
 
-<script>
-    // بيانات المستخدم للتجربة
-    const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser")) || null;
+    <script>
+      const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+      const usernameDisplay = document.getElementById("usernameDisplay");
+      const logoutLink = document.getElementById("logoutLink");
+      const userAvatar = document.getElementById("userAvatar");
 
-    const usernameDisplay = document.getElementById("usernameDisplay");
-    const logoutLink = document.getElementById("logoutLink");
-    const userAvatar = document.getElementById("userAvatar");
-    const controlHeader = document.getElementById("controlHeader");
-    const booksTableBody = document.querySelector("#booksTable tbody");
-
-    const books = [
-        {name: "Learn C++", author: "Ahmed Ali", status: "available"},
-        {name: "Software Engineering", author: "D. Ali", status: "available"},
-        {name: "Web Technology", author: "Sarah Mahmoud", status: "not"},
-    ];
-
-    if (loggedInUser) {
-        usernameDisplay.textContent = loggedInUser.username;
-        if(loggedInUser.avatar) userAvatar.src = loggedInUser.avatar;
+      if (!loggedInUser || loggedInUser.role !== "admin") {
+        alert("Access Denied! Admins only.");
+        window.location.href = "Loginpage.html";
+      } else {
+        usernameDisplay.textContent = "Admin: " + loggedInUser.username;
+        if (loggedInUser.avatar) userAvatar.src = loggedInUser.avatar;
         logoutLink.style.display = "inline";
-        controlHeader.textContent = loggedInUser.role === "admin" ? "Control" : "Status";
-    }
+      }
 
-    logoutLink.addEventListener("click", () => {
+      logoutLink.addEventListener("click", () => {
         localStorage.removeItem("loggedInUser");
         window.location.href = "Loginpage.html";
-    });
+      });
 
-    // عرض الكتب حسب دور المستخدم
-    books.forEach(book => {
-        const tr = document.createElement("tr");
+      let books = JSON.parse(localStorage.getItem("books")) || [
+        { name: "Learn C++", author: "Ahmed Ali", status: "available" },
+        { name: "Software Engineering", author: "D. Ali", status: "available" },
+        { name: "Web Technology", author: "Sarah Mahmoud", status: "not" },
+      ];
 
-        const tdName = document.createElement("td");
-        tdName.textContent = book.name;
-        const tdAuthor = document.createElement("td");
-        tdAuthor.textContent = book.author;
-        const tdControl = document.createElement("td");
+      const booksTableBody = document.querySelector("#booksTable tbody");
 
-        if(loggedInUser && loggedInUser.role === "admin") {
-            const editBtn = document.createElement("button");
-            editBtn.textContent = "Edit";
-            editBtn.className = "btn-edit";
-            editBtn.onclick = () => alert(`Edit ${book.name}`);
-            
-            const delBtn = document.createElement("button");
-            delBtn.textContent = "Delete";
-            delBtn.className = "btn-delete";
-            delBtn.onclick = () => alert(`Delete ${book.name}`);
-            
-            tdControl.appendChild(editBtn);
-            tdControl.appendChild(delBtn);
-        } else {
-            tdControl.textContent = book.status === "available" ? "Available" : "Not Available";
-            tdControl.className = book.status === "available" ? "status-available" : "status-not";
+      function renderBooks() {
+        booksTableBody.innerHTML = "";
+        books.forEach((book, index) => {
+          const tr = document.createElement("tr");
+
+          const tdName = document.createElement("td");
+          tdName.textContent = book.name;
+
+          const tdAuthor = document.createElement("td");
+          tdAuthor.textContent = book.author;
+
+          const tdControl = document.createElement("td");
+          const editBtn = document.createElement("button");
+          editBtn.textContent = "Edit";
+          editBtn.className = "btn-edit";
+          editBtn.onclick = () => {
+            const newName = prompt("Edit Book Name:", book.name);
+            const newAuthor = prompt("Edit Author:", book.author);
+            if (newName && newAuthor) {
+              book.name = newName;
+              book.author = newAuthor;
+              localStorage.setItem("books", JSON.stringify(books));
+              renderBooks();
+            }
+          };
+
+          const delBtn = document.createElement("button");
+          delBtn.textContent = "Delete";
+          delBtn.className = "btn-delete";
+          delBtn.onclick = () => {
+            if (confirm(`Delete "${book.name}"?`)) {
+              books.splice(index, 1);
+              localStorage.setItem("books", JSON.stringify(books));
+              renderBooks();
+            }
+          };
+
+          tdControl.appendChild(editBtn);
+          tdControl.appendChild(delBtn);
+
+          tr.appendChild(tdName);
+          tr.appendChild(tdAuthor);
+          tr.appendChild(tdControl);
+
+          booksTableBody.appendChild(tr);
+        });
+      }
+
+      renderBooks();
+
+      document.getElementById("addBookBtn").addEventListener("click", () => {
+        const name = prompt("Book Name:");
+        const author = prompt("Author:");
+        const status = prompt("Status (available/not):", "available");
+        if (name && author && (status === "available" || status === "not")) {
+          books.push({ name, author, status });
+          localStorage.setItem("books", JSON.stringify(books));
+          renderBooks();
         }
-
-        tr.appendChild(tdName);
-        tr.appendChild(tdAuthor);
-        tr.appendChild(tdControl);
-
-        booksTableBody.appendChild(tr);
-    });
-</script>
-
-</body>
+      });
+    </script>
+  </body>
 </html>
