@@ -4,166 +4,199 @@
     <meta charset="utf-8" />
     <title>Digital Library</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <link rel="stylesheet" href="style.css" />
+
     <style>
       body {
         margin: 0;
-        padding: 0;
-        font-family: Arial, sans-serif;
-        /* الخلفية صورة Library.png */
+        font-family: Arial;
         background-image: url("images/Library.png");
         background-size: cover;
         background-position: center;
-        background-repeat: no-repeat;
         min-height: 100vh;
         color: #fff;
       }
 
-      /* Navbar */
       .navbar {
-        background: rgba(93, 58, 33, 0.85);
+        background: rgba(93, 58, 33, 0.9);
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding: 15px 20px;
-        flex-wrap: wrap;
       }
 
-      .navbar a {
-        color: white;
-        text-decoration: none;
-        margin-left: 15px;
-        font-weight: bold;
+      .menu {
+        position: relative;
       }
 
-      .navbar a:hover {
-        text-decoration: underline;
-      }
-
-      .navbar .username {
-        font-weight: bold;
-      }
-
-      .navbar form {
-        display: flex;
-        margin-top: 10px;
-      }
-
-      .navbar input[type="text"] {
-        padding: 5px 10px;
-        border-radius: 5px 0 0 5px;
+      .menu-btn {
+        font-size: 22px;
+        background: none;
         border: none;
-        outline: none;
-      }
-
-      .navbar button {
-        padding: 5px 10px;
-        border-radius: 0 5px 5px 0;
-        border: none;
-        background: #7a4a2a;
         color: white;
         cursor: pointer;
       }
 
-      .navbar button:hover {
-        background: #5d3a21;
+      .menu-content {
+        display: none;
+        position: absolute;
+        background: white;
+        min-width: 170px;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+        border-radius: 8px;
+        top: 30px;
       }
 
-      /* Main Content Box */
+      .menu-content a {
+        display: block;
+        padding: 10px;
+        text-decoration: none;
+        color: #333;
+      }
+
+      .menu-content a:hover {
+        background: #eee;
+      }
+
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .user-info img {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        border: 2px solid #f1c40f;
+        display: none;
+      }
+
       .main-content {
         max-width: 600px;
         margin: 100px auto;
-        background: rgba(255, 255, 255, 0.85); /* شفاف قليلاً */
-        color: #333; /* نص واضح على الخلفية */
+        background: rgba(255, 255, 255, 0.9);
+        color: #333;
         text-align: center;
         padding: 50px;
         border-radius: 20px;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
       }
 
       .main-content h1 {
-        font-size: 48px;
-        margin-bottom: 20px;
         color: #5d3a21;
       }
 
-      .main-content p {
-        font-size: 20px;
-        margin-bottom: 30px;
-      }
-
-      .main-content a {
+      .btn {
         display: inline-block;
         padding: 12px 25px;
         background: #5d3a21;
         color: white;
         text-decoration: none;
         border-radius: 10px;
-        font-weight: bold;
-        transition: 0.3s;
+        margin-top: 20px;
       }
 
-      .main-content a:hover {
+      .btn:hover {
         background: #7a4a2a;
       }
     </style>
   </head>
-  <body>
-    <!-- Navbar -->
-    <div class="navbar">
-      <div class="nav-left">
-        <a href="Home.html">Digital Library 📖</a>
-        <a href="SearchBooks.html">Books</a>
-        <a href="Loginpage.html" id="loginLink">Login</a>
-        <a href="SignUp.html" id="signupLink">Sign Up</a>
-        <a href="#" id="logoutLink" style="display: none">Logout</a>
-      </div>
-      <div class="username" id="usernameDisplay">Welcome, Guest</div>
 
-      <form action="SearchBooks.html" method="get">
-        <input
-          type="text"
-          name="search"
-          placeholder="Search..."
-          class="search"
-        />
-        <button type="submit">
-          <i class="fa-solid fa-magnifying-glass"></i>
-        </button>
-      </form>
+  <body>
+    <div class="navbar">
+      <div class="menu">
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+        <div class="menu-content" id="menuContent">
+          <a href="Home.html">Home</a>
+
+          <a href="SearchBooks.html">Books</a>
+
+          <a href="UserView.html" id="dashboardLink">Dashboard</a>
+
+          <a href="ViewBook.html" id="adminLink">Admin Panel</a>
+
+          <a href="Loginpage.html" id="loginLink">Login</a>
+
+          <a href="SignUp.html" id="signupLink">Sign Up</a>
+
+          <a href="#" id="logoutLink">Logout</a>
+        </div>
+      </div>
+
+      <div class="user-info">
+        <img id="userAvatar" src="images/avatar1.png" />
+
+        <span id="usernameDisplay">Welcome, Guest</span>
+      </div>
     </div>
 
-    <!-- Main Content Box -->
     <div class="main-content">
       <h1>Welcome to Digital Library</h1>
-      <p>
-        Explore our collection of books, courses, and resources all in one
-        place.
-      </p>
-      <a href="SearchBooks.html">Browse Books</a>
+
+      <p>Explore our collection of books easily.</p>
+
+      <a href="SearchBooks.html" class="btn">Browse Books</a>
     </div>
 
     <script>
-      const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+      function toggleMenu() {
+        const menu = document.getElementById("menuContent");
+
+        menu.style.display = menu.style.display === "block" ? "none" : "block";
+      }
+
+      const user = JSON.parse(localStorage.getItem("loggedInUser"));
 
       const loginLink = document.getElementById("loginLink");
       const signupLink = document.getElementById("signupLink");
       const logoutLink = document.getElementById("logoutLink");
-      const usernameDisplay = document.getElementById("usernameDisplay");
 
-      if (loggedInUser) {
-        usernameDisplay.textContent = "Welcome, " + loggedInUser.username;
+      const dashboardLink = document.getElementById("dashboardLink");
+      const adminLink = document.getElementById("adminLink");
+
+      const usernameDisplay = document.getElementById("usernameDisplay");
+      const avatar = document.getElementById("userAvatar");
+
+      if (!user) {
+        dashboardLink.style.display = "none";
+        adminLink.style.display = "none";
+        logoutLink.style.display = "none";
+      } else if (user.role === "user") {
+        usernameDisplay.textContent = "Welcome, " + user.username;
+
         loginLink.style.display = "none";
         signupLink.style.display = "none";
-        logoutLink.style.display = "inline";
+
+        adminLink.style.display = "none";
+
+        avatar.style.display = "inline";
+
+        if (user.avatar) {
+          avatar.src = user.avatar;
+        }
+      } else if (user.role === "admin") {
+        usernameDisplay.textContent = "Admin: " + user.username;
+
+        loginLink.style.display = "none";
+        signupLink.style.display = "none";
+
+        dashboardLink.style.display = "none";
+
+        avatar.style.display = "inline";
+
+        if (user.avatar) {
+          avatar.src = user.avatar;
+        }
       }
 
       logoutLink.addEventListener("click", function () {
         localStorage.removeItem("loggedInUser");
+
         window.location.href = "Loginpage.html";
       });
     </script>
