@@ -1,34 +1,102 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sign Up - Digital Library</title>
-    <link rel="stylesheet" href="style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
     <style>
+      body {
+        font-family: "Segoe UI", Arial;
+        margin: 0;
+        padding: 0;
+        background-image: url("images/Library.png");
+        background-size: cover;
+        background-position: center;
+        min-height: 100vh;
+        color: #333;
+      }
+
+      .navbar {
+        background: rgba(93, 58, 33, 0.85);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        flex-wrap: wrap;
+        color: #fff;
+      }
+
+      .navbar a {
+        color: white;
+        text-decoration: none;
+        margin-left: 15px;
+        font-weight: bold;
+      }
+
+      .navbar a:hover {
+        text-decoration: underline;
+      }
+
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .user-info img {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        border: 2px solid #f1c40f;
+        display: none;
+      }
+
       .signup-card {
         width: 350px;
-        background: white;
+        background: rgba(255, 255, 255, 0.95);
         padding: 30px;
         margin: 100px auto;
         border-radius: 15px;
         box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         text-align: center;
       }
+
+      .signup-card h2 {
+        margin-bottom: 20px;
+        color: #5d3a21;
+      }
+
       .form-group {
         margin-bottom: 15px;
         text-align: left;
       }
+
       .form-group label {
         font-weight: bold;
       }
-      .form-group input {
+
+      .form-group input,
+      .form-group select {
         width: 100%;
         padding: 10px;
         margin-top: 5px;
         border-radius: 8px;
         border: 1px solid #ccc;
+        box-sizing: border-box;
       }
+
+      .form-group.admin-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
       button {
         width: 100%;
         padding: 10px;
@@ -38,13 +106,34 @@
         border-radius: 8px;
         cursor: pointer;
         font-size: 16px;
+        transition: 0.3s;
       }
+
       button:hover {
         background: #7a4a2a;
+        transform: translateY(-2px);
       }
     </style>
   </head>
+
   <body>
+    <div class="navbar">
+      <div>
+        <a href="Home.html">Digital Library 📖</a>
+        <a href="Loginpage.html">Login</a>
+        <a href="SignUp.html">Sign Up</a>
+        <a href="SearchBooks.html">Books</a>
+      </div>
+
+      <div class="user-info">
+        <img src="images/avatar1.png" id="userAvatar" />
+
+        <span id="usernameDisplay">Welcome, Guest</span>
+
+        <a href="#" id="logoutLink" style="display: none">Logout</a>
+      </div>
+    </div>
+
     <div class="signup-card">
       <h2>Create Account</h2>
 
@@ -67,7 +156,6 @@
             required
             placeholder="name@example.com"
             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-            title="Please enter a valid email address."
           />
         </div>
 
@@ -92,6 +180,20 @@
           />
         </div>
 
+        <div class="form-group">
+          <label for="avatar">Choose Avatar</label>
+
+          <select id="avatar">
+            <option value="images/avatar1.png">Avatar 1</option>
+
+            <option value="images/avatar2.png">Avatar 2</option>
+
+            <option value="images/avatar3.png">Avatar 3</option>
+
+            <option value="images/avatar4.png">Avatar 4</option>
+          </select>
+        </div>
+
         <div class="form-group admin-group">
           <input type="checkbox" id="isAdmin" />
           <label for="isAdmin">Register as Admin</label>
@@ -102,6 +204,10 @@
     </div>
 
     <script>
+      const usernameDisplay = document.getElementById("usernameDisplay");
+      const userAvatar = document.getElementById("userAvatar");
+      const logoutLink = document.getElementById("logoutLink");
+
       const form = document.getElementById("signupForm");
 
       form.addEventListener("submit", function (e) {
@@ -112,6 +218,9 @@
         const password = document.getElementById("password").value;
         const confirmPassword =
           document.getElementById("confirmPassword").value;
+
+        const avatar = document.getElementById("avatar").value;
+
         const isAdmin = document.getElementById("isAdmin").checked;
 
         if (password !== confirmPassword) {
@@ -122,6 +231,7 @@
         let users = JSON.parse(localStorage.getItem("users")) || [];
 
         const exists = users.find((user) => user.email === email);
+
         if (exists) {
           alert("This email already exists!");
           return;
@@ -132,14 +242,36 @@
           email: email,
           password: password,
           role: isAdmin ? "admin" : "user",
+          avatar: avatar,
         };
 
         users.push(newUser);
+
         localStorage.setItem("users", JSON.stringify(users));
 
         alert("Account created successfully 🎉");
 
         localStorage.setItem("lastSignedUpUser", JSON.stringify(newUser));
+
+        window.location.href = "Loginpage.html";
+      });
+
+      const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+
+      if (loggedInUser) {
+        usernameDisplay.textContent = "Welcome, " + loggedInUser.username;
+
+        userAvatar.style.display = "inline";
+
+        if (loggedInUser.avatar) {
+          userAvatar.src = loggedInUser.avatar;
+        }
+
+        logoutLink.style.display = "inline";
+      }
+
+      logoutLink.addEventListener("click", () => {
+        localStorage.removeItem("loggedInUser");
 
         window.location.href = "Loginpage.html";
       });
