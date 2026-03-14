@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - Digital Library</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-image: url("images/Library.png");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        color: #333;
+        min-height: 100vh;
+      }
+
+      .navbar {
+        background: rgba(93, 58, 33, 0.85);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        flex-wrap: wrap;
+        color: #fff;
+      }
+
+      .navbar a {
+        color: white;
+        text-decoration: none;
+        margin-left: 15px;
+        font-weight: bold;
+      }
+
+      .navbar a:hover {
+        text-decoration: underline;
+      }
+
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .user-info img {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        border: 2px solid #f1c40f;
+      }
+
+      .container {
+        max-width: 1000px;
+        margin: 50px auto;
+        background: rgba(255, 255, 255, 0.9);
+        color: #333;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      h2 {
+        color: #5d3a21;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+      }
+
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: center;
+      }
+
+      th {
+        background: #5d3a21;
+        color: white;
+      }
+
+      .book-link {
+        text-decoration: none;
+        color: #5d3a21;
+        font-weight: bold;
+        border-bottom: 1px dashed transparent;
+        transition: 0.3s;
+      }
+
+      .book-link:hover {
+        color: #e67e22;
+        border-bottom: 1px dashed #e67e22;
+      }
+
+      .btn-edit {
+        background-color: #74e795;
+        border: none;
+        padding: 8px 15px;
+        cursor: pointer;
+        margin-right: 5px;
+        border-radius: 5px;
+        font-weight: bold;
+        color: #155724;
+      }
+
+      .btn-delete {
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        cursor: pointer;
+        border-radius: 5px;
+        font-weight: bold;
+      }
+
+      .btn-edit:hover {
+        background-color: #5ac36e;
+      }
+      .btn-delete:hover {
+        background-color: #c82333;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="nav-left">
+        <a href="Home.html">Digital Library 📖</a>
+        <a href="SearchBooks.html">Books</a>
+      </div>
+      <div class="user-info">
+        <img
+          src="images/default-avtar1.jpg"
+          id="userAvatar"
+          alt="User Avatar"
+        />
+        <span id="usernameDisplay">Welcome, Guest</span>
+        <a href="#" id="logoutLink" style="display: none">Logout</a>
+      </div>
+
+      <form action="SearchBooks.html" method="get">
+        <input type="text" name="search" placeholder="Search..." />
+        <button type="submit">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </form>
+    </div>
+
+    <div class="container">
+      <h2>Admin Dashboard - Manage Books</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Book Name</th>
+            <th>Author</th>
+            <th>Category</th>
+            <th>Control</th>
+          </tr>
+        </thead>
+        <tbody id="booksTableBody"></tbody>
+      </table>
+    </div>
+
+    <script>
+      const user = JSON.parse(localStorage.getItem("loggedInUser"));
+      const usernameDisplay = document.getElementById("usernameDisplay");
+      const userAvatar = document.getElementById("userAvatar");
+      const logoutLink = document.getElementById("logoutLink");
+      const booksTableBody = document.getElementById("booksTableBody");
+
+      const books = [
+        { name: "Learn C++", author: "Ahmed Ali", category: "Programming" },
+        {
+          name: "Software Engineering",
+          author: "D. Ali",
+          category: "Programming",
+        },
+      ];
+
+      if (!user) {
+        alert("Please login first!");
+        window.location.href = "Loginpage.html";
+      } else {
+        usernameDisplay.textContent = user.username;
+        if (user.avatar) userAvatar.src = user.avatar;
+        logoutLink.style.display = "inline";
+
+        if (user.role !== "admin") {
+          alert("Access denied! Only admins can enter.");
+          window.location.href = "Home.html";
+        }
+      }
+
+      logoutLink.addEventListener("click", () => {
+        localStorage.removeItem("loggedInUser");
+        window.location.href = "Loginpage.html";
+      });
+
+      books.forEach((book) => {
+        const tr = document.createElement("tr");
+
+        const tdName = document.createElement("td");
+        const link = document.createElement("a");
+        link.href = "search.html";
+        link.textContent = book.name;
+        link.className = "book-link";
+        tdName.appendChild(link);
+
+        const tdAuthor = document.createElement("td");
+        tdAuthor.textContent = book.author;
+
+        const tdCategory = document.createElement("td");
+        tdCategory.textContent = book.category;
+
+        const tdControl = document.createElement("td");
+        const editBtn = document.createElement("button");
+        editBtn.className = "btn-edit";
+        editBtn.textContent = "Edit";
+        editBtn.onclick = () => alert(`Edit ${book.name}`);
+
+        const deleteBtn = document.createElement("button");
+        deleteBtn.className = "btn-delete";
+        deleteBtn.textContent = "Delete";
+        deleteBtn.onclick = () => alert(`Delete ${book.name}`);
+
+        tdControl.appendChild(editBtn);
+        tdControl.appendChild(deleteBtn);
+
+        tr.appendChild(tdName);
+        tr.appendChild(tdAuthor);
+        tr.appendChild(tdCategory);
+        tr.appendChild(tdControl);
+
+        booksTableBody.appendChild(tr);
+      });
+    </script>
+  </body>
+</html>

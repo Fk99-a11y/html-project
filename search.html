@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Book Information - Digital Library</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background-image: url("images/Library.png");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        min-height: 100vh;
+        color: #333;
+      }
+
+      .navbar {
+        background: rgba(93, 58, 33, 0.85);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        flex-wrap: wrap;
+        color: #fff;
+      }
+
+      .navbar a {
+        color: white;
+        text-decoration: none;
+        margin-left: 15px;
+        font-weight: bold;
+      }
+
+      .navbar a:hover {
+        text-decoration: underline;
+      }
+
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .user-info img {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        border: 2px solid #f1c40f;
+      }
+
+      .main-content {
+        max-width: 750px;
+        margin: 60px auto;
+        padding: 20px;
+      }
+
+      .info-card {
+        background: rgba(255, 255, 255, 0.95);
+        color: #333;
+        padding: 40px;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        border-top: 8px solid #5d3a21;
+      }
+
+      .info-card h2 {
+        color: #5d3a21;
+        text-align: center;
+        font-size: 32px;
+        margin-top: 0;
+        margin-bottom: 25px;
+      }
+
+      .detail-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 15px 0;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .label {
+        font-weight: bold;
+        color: #7a4a2a;
+        flex: 1;
+      }
+
+      .value {
+        flex: 2;
+        color: #333;
+        text-align: left;
+      }
+
+      .about-section {
+        margin-top: 25px;
+        padding: 20px;
+        background-color: #fcf8f5;
+        border-radius: 10px;
+        line-height: 1.7;
+        color: #444;
+        border-left: 5px solid #5d3a21;
+      }
+
+      .about-section h3 {
+        margin-top: 0;
+        color: #5d3a21;
+        font-size: 20px;
+      }
+
+      .back-link {
+        display: inline-block;
+        text-decoration: none;
+        background: #5d3a21;
+        color: white;
+        padding: 12px 35px;
+        border-radius: 8px;
+        font-weight: bold;
+        transition: 0.3s;
+        margin-top: 20px;
+      }
+
+      .back-link:hover {
+        background: #7a4a2a;
+        transform: translateY(-2px);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="nav-left">
+        <a href="Home.html">Digital Library 📖</a>
+        <a href="SearchBooks.html">Books</a>
+      </div>
+      <div class="user-info">
+        <img
+          src="images/default-avtar.jpg"
+          id="userAvatar"
+          alt="User Avatar"
+          style="display: none"
+        />
+        <span id="usernameDisplay">Welcome, Guest</span>
+        <a href="#" id="logoutLink" style="display: none">Logout</a>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <div class="info-card">
+        <h2>Book Details</h2>
+
+        <div class="detail-row">
+          <span class="label">Book Title:</span>
+          <span class="value">Learn C++ Programming</span>
+        </div>
+
+        <div class="detail-row">
+          <span class="label">Author:</span>
+          <span class="value">Ahmed Ali</span>
+        </div>
+
+        <div class="detail-row">
+          <span class="label">Pages:</span>
+          <span class="value">450 Pages</span>
+        </div>
+
+        <div class="detail-row">
+          <span class="label">Published:</span>
+          <span class="value">2024</span>
+        </div>
+
+        <div class="about-section">
+          <h3>About the Book:</h3>
+          <p>
+            This book provides a deep dive into C++ fundamentals and advanced
+            Object-Oriented Programming (OOP). It is specially designed for
+            students at the Faculty of Computers and AI to build a strong logic
+            in software development.
+          </p>
+        </div>
+
+        <a href="SearchBooks.html" class="back-link">← Back to Books</a>
+      </div>
+    </div>
+
+    <script>
+      const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+      const usernameDisplay = document.getElementById("usernameDisplay");
+      const userAvatar = document.getElementById("userAvatar");
+      const logoutLink = document.getElementById("logoutLink");
+
+      if (loggedInUser) {
+        usernameDisplay.textContent = "Welcome, " + loggedInUser.username;
+        if (loggedInUser.avatar) userAvatar.src = loggedInUser.avatar;
+        userAvatar.style.display = "inline";
+        logoutLink.style.display = "inline";
+      }
+
+      logoutLink.addEventListener("click", () => {
+        localStorage.removeItem("loggedInUser");
+        userAvatar.style.display = "none";
+        logoutLink.style.display = "none";
+        usernameDisplay.textContent = "Welcome, Guest";
+        window.location.href = "Loginpage.html";
+      });
+    </script>
+  </body>
+</html>
