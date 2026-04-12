@@ -117,7 +117,6 @@
   </head>
 
   <body>
-    <!-- NAVBAR -->
     <div class="navbar">
       <div>
         <a href="Home.html">Digital Library 📖</a>
@@ -131,7 +130,6 @@
       </div>
     </div>
 
-    <!-- CONTENT -->
     <div class="container">
       <h2>Admin Dashboard - Manage Books</h2>
 
@@ -156,7 +154,6 @@
       const userAvatar = document.getElementById("userAvatar");
       const logoutLink = document.getElementById("logoutLink");
 
-      // حماية الصفحة
       if (!user) {
         alert("Please login first!");
         window.location.href = "Loginpage.html";
@@ -178,7 +175,6 @@
         window.location.href = "Loginpage.html";
       });
 
-      // ✅ IMPORTANT: نفس الداتا بتاعة كل الصفحات
       let books = JSON.parse(localStorage.getItem("books")) || [];
 
       function renderBooks() {
@@ -205,7 +201,6 @@
         });
       }
 
-      // 📌 show description
       window.showDesc = function (index) {
         alert(
           "Description:\n" +
@@ -213,14 +208,12 @@
         );
       };
 
-      // 📌 delete
       window.deleteBook = function (index) {
         books.splice(index, 1);
         localStorage.setItem("books", JSON.stringify(books));
         renderBooks();
       };
 
-      // 📌 edit (basic)
       window.editBook = function (index) {
         const newName = prompt("Edit Book Name:", books[index].name);
         if (newName) {
