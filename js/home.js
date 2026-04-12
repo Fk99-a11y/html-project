@@ -3,6 +3,7 @@ function toggleMenu() {
     menu.style.display = menu.style.display === "block" ? "none" : "block";
   }
   
+  
   const user = JSON.parse(localStorage.getItem("loggedInUser"));
   
   const loginLink = document.getElementById("loginLink");
