@@ -1,258 +1,272 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Search Books - Digital Library</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+  <meta charset="UTF-8" />
+  <title>Search Books - Digital Library</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
+  <style>
+    body {
+      font-family: "Segoe UI", Arial;
+      margin: 0;
+      padding: 0;
+      background-image: url("images/Library.png");
+      background-size: cover;
+      background-position: center;
+      min-height: 100vh;
+    }
 
-    <style>
-      body {
-        font-family: "Segoe UI", Arial;
-        margin: 0;
-        padding: 0;
-        background-image: url("images/Library.png");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        min-height: 100vh;
-        color: #333;
-      }
+    .navbar {
+      background: rgba(93, 58, 33, 0.85);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      color: white;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
 
-      .navbar {
-        background: rgba(93, 58, 33, 0.85);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px 20px;
-        flex-wrap: wrap;
-        color: #fff;
-      }
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      margin-left: 15px;
+      font-weight: bold;
+    }
 
-      .navbar a {
-        color: white;
-        text-decoration: none;
-        margin-left: 15px;
-        font-weight: bold;
-      }
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
-      .navbar a:hover {
-        text-decoration: underline;
-      }
+    .user-info img {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      border: 2px solid #f1c40f;
+      display: none;
+    }
 
-      .user-info {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
+    h2 {
+      color: white;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.9);
+    }
 
-      .user-info img {
-        width: 35px;
-        height: 35px;
-        border-radius: 50%;
-        border: 2px solid #f1c40f;
-        display: none;
-      }
+    .container {
+      width: 80%;
+      margin: 30px auto;
+    }
 
-      .container {
-        width: 80%;
-        margin: 30px auto;
-      }
+    .search-box {
+      background: rgba(255,255,255,0.95);
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
 
-      form {
-        background: rgba(255, 255, 255, 0.95);
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        display: flex;
-        flex-wrap: wrap;
-        gap: 15px;
-        align-items: flex-end;
-      }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
 
-      form label {
-        font-weight: bold;
-        width: 100%;
-      }
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #5d3a21;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
 
-      form input,
-      form select {
-        padding: 8px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-        flex: 1 1 200px;
-      }
+    table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+      background: rgba(255,255,255,0.95);
+      border-radius: 10px;
+      overflow: hidden;
+    }
 
-      form button {
-        padding: 10px 20px;
-        background: #5d3a21;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-      }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: center;
+    }
 
-      form button:hover {
-        background: #7a4a2a;
-      }
+    th {
+      background: #5d3a21;
+      color: white;
+    }
 
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-      }
+    tr:hover {
+      background: rgba(93, 58, 33, 0.1);
+      cursor: pointer;
+    }
 
-      th,
-      td {
-        border: 1px solid #ddd;
-        padding: 12px;
-        text-align: center;
-      }
+    .available { color: green; font-weight: bold; }
+    .not-available { color: red; font-weight: bold; }
+  </style>
+</head>
 
-      th {
-        background: #5d3a21;
-        color: white;
-      }
+<body>
 
-      td.available {
-        color: green;
-        font-weight: bold;
-      }
+<div class="navbar">
+  <div>
+    <a href="Home.html">Digital Library 📖</a>
+    <a href="SearchBooks.html">Books</a>
+    <a href="UserView.html">Dashboard</a>
+  </div>
 
-      td.not-available {
-        color: red;
-        font-weight: bold;
-      }
-    </style>
-  </head>
+  <div class="user-info">
+    <img src="images/avtar1.jpg" id="userAvatar" />
+    <span id="usernameDisplay">Welcome Guest</span>
+    <a href="#" id="logoutLink" style="display:none;">Logout</a>
+  </div>
+</div>
 
-  <body>
-    <div class="navbar">
-      <div>
-        <a href="Home.html">Digital Library 📖</a>
-        <a href="SearchBooks.html">Books</a>
-        <a href="UserView.html">Dashboard</a>
-      </div>
+<div class="container">
 
-      <div class="user-info">
-        <img src="images/avtar1.jpg" id="userAvatar" />
+  <h2>Search Books</h2>
 
-        <span id="usernameDisplay">Welcome, Guest</span>
+  <div class="search-box">
+    <label>ID</label>
+    <input type="text" id="idSearch">
+  </div>
 
-        <a href="#" id="logoutLink" style="display: none">Logout</a>
-      </div>
-    </div>
+  <div class="search-box">
+    <label>Name</label>
+    <input type="text" id="nameSearch">
+  </div>
 
-    <div class="container">
-      <h1>Search Books</h1>
+  <div class="search-box">
+    <label>Author</label>
+    <input type="text" id="authorSearch">
+  </div>
 
-      <form id="searchForm">
-        <label for="title">Title:</label>
-        <input type="text" id="title" placeholder="Enter book title" />
+  <div class="search-box">
+    <label>Category</label>
+    <select id="categorySearch">
+      <option value="">All Categories</option>
+    </select>
+  </div>
 
-        <label for="author">Author:</label>
-        <input type="text" id="author" placeholder="Enter author name" />
+  <button onclick="searchBooks()">Search</button>
 
-        <label for="category">Category:</label>
+  <table id="booksTable">
+    <tr>
+      <th>Name</th>
+      <th>Author</th>
+      <th>Category</th>
+      <th>Status</th>
+    </tr>
+  </table>
 
-        <select id="category">
-          <option value="">All</option>
-          <option value="Programming">Programming</option>
-          <option value="Database">Database</option>
-          <option value="Networking">Networking</option>
-        </select>
+</div>
 
-        <button type="submit">Search</button>
-      </form>
+<script>
+const user = JSON.parse(localStorage.getItem("loggedInUser"));
 
-      <h2>Search Results</h2>
+const usernameDisplay = document.getElementById("usernameDisplay");
+const userAvatar = document.getElementById("userAvatar");
+const logoutLink = document.getElementById("logoutLink");
 
-      <table id="booksTable">
-        <tr>
-          <th>Book Name</th>
-          <th>Author</th>
-          <th>Category</th>
-          <th>Status</th>
-        </tr>
+if (user) {
+  usernameDisplay.textContent = "Welcome " + user.username;
 
-        <tr>
-          <td>HTML Guide</td>
-          <td>Mike</td>
-          <td>Programming</td>
-          <td class="available">Available</td>
-        </tr>
+  if (user.avatar) {
+    userAvatar.src = user.avatar;
+    userAvatar.style.display = "inline";
+  }
 
-        <tr>
-          <td>Database Basics</td>
-          <td>John</td>
-          <td>Database</td>
-          <td class="not-available">Not Available</td>
-        </tr>
-      </table>
-    </div>
+  logoutLink.style.display = "inline";
+}
 
-    <script>
-      const user = JSON.parse(localStorage.getItem("loggedInUser"));
+logoutLink.addEventListener("click", () => {
+  localStorage.removeItem("loggedInUser");
+  window.location.href = "Loginpage.html";
+});
 
-      const usernameDisplay = document.getElementById("usernameDisplay");
-      const userAvatar = document.getElementById("userAvatar");
-      const logoutLink = document.getElementById("logoutLink");
+let books = JSON.parse(localStorage.getItem("books")) || [];
 
-      if (user) {
-        usernameDisplay.textContent = "Welcome, " + user.username;
+function displayBooks(list = books) {
+  const table = document.getElementById("booksTable");
 
-        if (user.avatar) {
-          userAvatar.src = user.avatar;
-        }
+  table.innerHTML = `
+    <tr>
+      <th>Name</th>
+      <th>Author</th>
+      <th>Category</th>
+      <th>Status</th>
+    </tr>
+  `;
 
-        userAvatar.style.display = "inline";
+  list.forEach(book => {
+    const row = document.createElement("tr");
 
-        logoutLink.style.display = "inline";
-      }
+    row.innerHTML = `
+      <td>${book.name}</td>
+      <td>${book.author}</td>
+      <td>${book.category}</td>
+      <td class="${book.available ? 'available' : 'not-available'}">
+        ${book.available ? "Available" : "Not Available"}
+      </td>
+    `;
 
-      logoutLink.addEventListener("click", function () {
-        localStorage.removeItem("loggedInUser");
+    row.addEventListener("click", () => {
+      alert("Description:\n" + (book.description || "No description available"));
+    });
 
-        window.location.href = "Loginpage.html";
-      });
+    table.appendChild(row);
+  });
+}
 
-      document
-        .getElementById("searchForm")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
+function loadCategories() {
+  let books = JSON.parse(localStorage.getItem("books")) || [];
 
-          const title = document.getElementById("title").value.toLowerCase();
-          const author = document.getElementById("author").value.toLowerCase();
-          const category = document.getElementById("category").value;
+  let categories = [...new Set(books.map(b => b.category?.trim()))].filter(Boolean);
 
-          const rows = document.querySelectorAll("#booksTable tr");
+  let select = document.getElementById("categorySearch");
 
-          rows.forEach((row, index) => {
-            if (index === 0) return;
+  select.innerHTML = `<option value="">All Categories</option>`;
 
-            const tName = row.cells[0].textContent.toLowerCase();
-            const tAuthor = row.cells[1].textContent.toLowerCase();
-            const tCategory = row.cells[2].textContent;
+  categories.forEach(cat => {
+    let option = document.createElement("option");
+    option.value = cat;
+    option.textContent = cat;
+    select.appendChild(option);
+  });
+}
 
-            if (
-              (title && !tName.includes(title)) ||
-              (author && !tAuthor.includes(author)) ||
-              (category && tCategory !== category)
-            ) {
-              row.style.display = "none";
-            } else {
-              row.style.display = "";
-            }
-          });
-        });
-    </script>
-  </body>
+function searchBooks() {
+  const id = document.getElementById("idSearch").value.trim().toLowerCase();
+  const name = document.getElementById("nameSearch").value.trim().toLowerCase();
+  const author = document.getElementById("authorSearch").value.trim().toLowerCase();
+  const category = document.getElementById("categorySearch").value.trim().toLowerCase();
+
+  let books = JSON.parse(localStorage.getItem("books")) || [];
+
+  const filtered = books.filter(book => {
+    return (
+      (!id || String(book.id).toLowerCase().includes(id)) &&
+      (!name || book.name.toLowerCase().includes(name)) &&
+      (!author || book.author.toLowerCase().includes(author)) &&
+      (!category || (book.category || "").toLowerCase() === category)
+    );
+  });
+
+  displayBooks(filtered);
+}
+
+loadCategories();
+displayBooks();
+</script>
+
+</body>
 </html>

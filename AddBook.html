@@ -1,70 +1,163 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>Add Book</title>
-  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background-image: url("images/Library.png");
+      background-size: cover;
+      background-position: center;
+      min-height: 100vh;
+    }
+
+    .navbar {
+      background: rgba(93, 58, 33, 0.85);
+      padding: 15px;
+      display: flex;
+      gap: 15px;
+      color: white;
+    }
+
+    .navbar a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .addbook-card {
+      width: 400px;
+      margin: 60px auto;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 5px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #5d3a21;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #7a4a2a;
+    }
+  </style>
 </head>
 
 <body>
 
+<div class="navbar">
+  <a href="Homepage.html">Home</a>
+  <a href="AddBook.html">Add Book</a>
+  <a href="SearchBooks.html">Search Books</a>
+  <a href="Loginpage.html">Logout</a>
+</div>
 
-  <script>
-    const user = JSON.parse(localStorage.getItem("loggedInUser"));
-    if (!user) {
-      alert("Please login first!");
-      window.location.href = "Loginpage.html";
-    }
-  </script>
+<div class="addbook-card">
+  <h2>Add New Book</h2>
 
-  <!-- Navbar -->
-  <div class="navbar">
-    <a href="Homepage.html">Home</a>
-    <a href="AddBook.html">Add Book</a>
-    <a href="ViewBooks.html">View Books</a>
-    <a href="Loginpage.html">Logout</a>
-  </div>
+  <form id="bookForm">
 
-  <!-- Add Book Form -->
-  <div class="addbook-card">
-    <h2>Add New Book</h2>
-    <form action="#">
-      <div class="form-group">
-        <label>Book ID</label>
-        <input type="number" placeholder="Enter Book ID" required>
+    <div class="form-group">
+      <label>Book ID</label>
+      <input type="number" required>
+    </div>
+
+    <div class="form-group">
+      <label>Book Name</label>
+      <input type="text" required>
+    </div>
+
+    <div class="form-group">
+      <label>Author</label>
+      <input type="text" required>
+    </div>
+
+    <div class="form-group">
+      <label>Category</label>
+      <input type="text" id="categoryInput" required>
+    </div>
+
+    <div class="form-group">
+      <label>Description</label>
+      <textarea rows="4" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Availability</label>
+
+      <div class="radio-group">
+        <label><input type="radio" name="available" value="true" required> Available</label>
+        <label><input type="radio" name="available" value="false"> Not Available</label>
       </div>
+    </div>
 
-      <div class="form-group">
-        <label>Book Name</label>
-        <input type="text" placeholder="Enter Book Name" required>
-      </div>
+    <button type="submit">Add Book</button>
 
-      <div class="form-group">
-        <label>Author</label>
-        <input type="text" placeholder="Enter Author Name" required>
-      </div>
+  </form>
+</div>
 
-      <div class="form-group">
-        <label>Category</label>
-        <select required>
-          <option value="">Select Category</option>
-          <option>Fiction</option>
-          <option>Non-Fiction</option>
-          <option>Sci-Fi</option>
-          <option>Technology</option>
-          <option>History</option>
-        </select>
-      </div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
 
-      <div class="form-group">
-        <label>Description</label>
-        <textarea rows="4" placeholder="Enter Book Description" required></textarea>
-      </div>
+  const form = document.getElementById("bookForm");
 
-      <button type="submit">Add Book</button>
-    </form>
-  </div>
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const newBook = {
+      id: document.querySelector("input[type='number']").value,
+      name: document.querySelectorAll("input")[1].value,
+      author: document.querySelectorAll("input")[2].value,
+      category: document.getElementById("categoryInput").value,
+      description: document.querySelector("textarea").value,
+      available: document.querySelector('input[name="available"]:checked').value === "true"
+    };
+
+    let books = JSON.parse(localStorage.getItem("books")) || [];
+    books.push(newBook);
+
+    localStorage.setItem("books", JSON.stringify(books));
+
+    alert("Book added successfully!");
+    form.reset();
+  });
+
+});
+</script>
 
 </body>
-
 </html>

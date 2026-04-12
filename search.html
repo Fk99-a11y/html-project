@@ -145,7 +145,7 @@
           alt="User Avatar"
           style="display: none"
         />
-        <span id="usernameDisplay">Welcome, Guest</span>
+        <span id="usernameDisplay">Welcome Guest</span>
         <a href="#" id="logoutLink" style="display: none">Logout</a>
       </div>
     </div>
@@ -205,7 +205,7 @@
         localStorage.removeItem("loggedInUser");
         userAvatar.style.display = "none";
         logoutLink.style.display = "none";
-        usernameDisplay.textContent = "Welcome, Guest";
+        usernameDisplay.textContent = "Welcome Guest";
         window.location.href = "Loginpage.html";
       });
     </script>

@@ -8,6 +8,7 @@ body {
   font-family: Arial, sans-serif;
 }
 
+/* ===== NAVBAR (LOGIN + ADMIN STYLE كما هو) ===== */
 .navbar {
   background-color: rgb(117, 85, 0);
   padding: 15px 30px;
@@ -28,6 +29,7 @@ body {
   color: #ffd369;
 }
 
+/* USER */
 .user-info {
   display: flex;
   align-items: center;
@@ -42,6 +44,7 @@ body {
   display: none;
 }
 
+/* CARDS */
 .login-card,
 .signup-card,
 .addbook-card {
@@ -59,6 +62,7 @@ body {
   color: #5d3a21;
 }
 
+/* FORMS */
 .form-group input,
 .form-group select,
 .form-group textarea {
@@ -107,4 +111,67 @@ button:hover {
   margin-bottom: 10px;
   display: none;
   text-align: center;
+}
+
+/* ===== HOME ONLY (إضافة بدون تغيير الشكل) ===== */
+
+.menu {
+  position: relative;
+}
+
+.menu-btn {
+  font-size: 22px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.menu-content {
+  display: none;
+  position: absolute;
+  background: white;
+  min-width: 170px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  top: 30px;
+}
+
+.menu-content a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #333;
+}
+
+.menu-content a:hover {
+  background: #eee;
+}
+
+.main-content {
+  max-width: 600px;
+  margin: 100px auto;
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
+  text-align: center;
+  padding: 50px;
+  border-radius: 20px;
+}
+
+.main-content h1 {
+  color: #5d3a21;
+}
+
+.btn {
+  display: inline-block;
+  padding: 12px 25px;
+  background: #5d3a21;
+  color: white;
+  text-decoration: none;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+.btn:hover {
+  background: #7a4a2a;
 }
