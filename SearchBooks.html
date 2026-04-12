@@ -252,6 +252,7 @@ function searchBooks() {
 
   let books = JSON.parse(localStorage.getItem("books")) || [];
 
+  
   const filtered = books.filter(book => {
     return (
       (!id || String(book.id).toLowerCase().includes(id)) &&
