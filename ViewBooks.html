@@ -255,12 +255,18 @@
           booksTableBody.appendChild(tr);
         });
       }
-      
 
       renderBooks();
 
       document.getElementById("addBookBtn").addEventListener("click", () => {
-       window.location.href = "AddBook.html";
+        const name = prompt("Book Name:");
+        const author = prompt("Author:");
+        const status = prompt("Status (available/not):", "available");
+        if (name && author && (status === "available" || status === "not")) {
+          books.push({ name, author, status });
+          localStorage.setItem("books", JSON.stringify(books));
+          renderBooks();
+        }
       });
     </script>
   </body>

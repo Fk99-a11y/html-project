@@ -1,44 +1,205 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <title>Digital Library</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <head>
+    <meta charset="utf-8" />
+    <title>Digital Library</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <link rel="stylesheet" href="css/style.css" />
-  
-</head>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
 
-<body>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial;
+        background-image: url("images/Library.png");
+        background-size: cover;
+        background-position: center;
+        min-height: 100vh;
+        color: #fff;
+      }
 
-  <div class="navbar">
-    <div class="menu">
-      <button class="menu-btn" onclick="toggleMenu()">☰</button>
+      .navbar {
+        background: rgba(93, 58, 33, 0.9);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+      }
 
-      <div class="menu-content" id="menuContent">
-        <a href="Home.html">Home</a>
-        <a href="SearchBooks.html">Books</a>
-        <a href="UserView.html" id="dashboardLink">Dashboard</a>
-        <a href="ViewBooks.html" id="adminLink">Admin Panel</a>
-        <a href="Loginpage.html" id="loginLink">Login</a>
-        <a href="SignUp.html" id="signupLink">Sign Up</a>
-        <a href="#" id="logoutLink">Logout</a>
+      .menu {
+        position: relative;
+      }
+
+      .menu-btn {
+        font-size: 22px;
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+      }
+
+      .menu-content {
+        display: none;
+        position: absolute;
+        background: white;
+        min-width: 170px;
+        box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+        border-radius: 8px;
+        top: 30px;
+      }
+
+      .menu-content a {
+        display: block;
+        padding: 10px;
+        text-decoration: none;
+        color: #333;
+      }
+
+      .menu-content a:hover {
+        background: #eee;
+      }
+
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .user-info img {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        border: 2px solid #f1c40f;
+        display: none;
+      }
+
+      .main-content {
+        max-width: 600px;
+        margin: 100px auto;
+        background: rgba(255, 255, 255, 0.9);
+        color: #333;
+        text-align: center;
+        padding: 50px;
+        border-radius: 20px;
+      }
+
+      .main-content h1 {
+        color: #5d3a21;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 12px 25px;
+        background: #5d3a21;
+        color: white;
+        text-decoration: none;
+        border-radius: 10px;
+        margin-top: 20px;
+      }
+
+      .btn:hover {
+        background: #7a4a2a;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="navbar">
+      <div class="menu">
+        <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+        <div class="menu-content" id="menuContent">
+          <a href="Home.html">Home</a>
+
+          <a href="SearchBooks.html">Books</a>
+
+          <a href="UserView.html" id="dashboardLink">Dashboard</a>
+
+          <a href="ViewBooks.html" id="adminLink">Admin Panel</a>
+
+          <a href="Loginpage.html" id="loginLink">Login</a>
+
+          <a href="SignUp.html" id="signupLink">Sign Up</a>
+
+          <a href="#" id="logoutLink">Logout</a>
+        </div>
+      </div>
+
+      <div class="user-info">
+        <img id="userAvatar" src="images/avtar1.jpg" style="display: none" />
+
+        <span id="usernameDisplay">Welcome, Guest</span>
       </div>
     </div>
 
-    <div class="user-info">
-      <img id="userAvatar" src="images/avtar1.jpg" style="display:none;" />
-      <span id="usernameDisplay">Welcome Guest</span>
+    <div class="main-content">
+      <h1>Welcome to Digital Library</h1>
+
+      <p>Explore our collection of books easily.</p>
+
+      <a href="SearchBooks.html" class="btn">Browse Books</a>
     </div>
-  </div>
 
-  <div class="main-content">
-    <h1>Welcome to Digital Library</h1>
-    <p>Explore our collection of books easily.</p>
-    <a href="SearchBooks.html" class="btn">Browse Books</a>
-  </div>
+    <script>
+      function toggleMenu() {
+        const menu = document.getElementById("menuContent");
 
-  <script src="js/home.js"></script>
+        menu.style.display = menu.style.display === "block" ? "none" : "block";
+      }
 
-</body>
+      const user = JSON.parse(localStorage.getItem("loggedInUser"));
+
+      const loginLink = document.getElementById("loginLink");
+      const signupLink = document.getElementById("signupLink");
+      const logoutLink = document.getElementById("logoutLink");
+
+      const dashboardLink = document.getElementById("dashboardLink");
+      const adminLink = document.getElementById("adminLink");
+
+      const usernameDisplay = document.getElementById("usernameDisplay");
+      const avatar = document.getElementById("userAvatar");
+
+      if (!user) {
+        dashboardLink.style.display = "none";
+        adminLink.style.display = "none";
+        logoutLink.style.display = "none";
+      } else if (user.role === "user") {
+        usernameDisplay.textContent = "Welcome, " + user.username;
+
+        loginLink.style.display = "none";
+        signupLink.style.display = "none";
+
+        adminLink.style.display = "none";
+
+        avatar.style.display = "inline";
+
+        if (user.avatar) {
+          avatar.src = user.avatar;
+        }
+      } else if (user.role === "admin") {
+        usernameDisplay.textContent = "Admin: " + user.username;
+
+        loginLink.style.display = "none";
+        signupLink.style.display = "none";
+
+        dashboardLink.style.display = "none";
+        adminLink.style.display = "block";
+
+        avatar.style.display = "inline";
+
+        if (user.avatar) {
+          avatar.src = user.avatar;
+        }
+      }
+
+      logoutLink.addEventListener("click", function () {
+        localStorage.removeItem("loggedInUser");
+
+        window.location.href = "Loginpage.html";
+      });
+    </script>
+  </body>
 </html>

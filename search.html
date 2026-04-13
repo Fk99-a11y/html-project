@@ -2,8 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
+    <title>Book Information - Digital Library</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Edit Book - Digital Library</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -17,6 +17,7 @@
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
+        background-attachment: fixed;
         min-height: 100vh;
         color: #333;
       }
@@ -56,7 +57,7 @@
       }
 
       .main-content {
-        max-width: 600px;
+        max-width: 750px;
         margin: 60px auto;
         padding: 20px;
       }
@@ -78,55 +79,56 @@
         margin-bottom: 25px;
       }
 
-      label {
-        display: block;
+      .detail-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 15px 0;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .label {
         font-weight: bold;
         color: #7a4a2a;
-        margin-bottom: 8px;
+        flex: 1;
       }
 
-      input[type="text"],
-      input[type="number"],
-      select,
-      textarea {
-        width: 100%;
-        padding: 12px;
-        margin-bottom: 20px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        box-sizing: border-box;
-        font-size: 16px;
+      .value {
+        flex: 2;
+        color: #333;
+        text-align: left;
       }
 
-      .btn-save {
-        background: #5d3a21;
-        color: white;
-        padding: 12px 30px;
-        border: none;
-        border-radius: 8px;
-        font-weight: bold;
-        font-size: 18px;
-        cursor: pointer;
-        width: 100%;
-        transition: 0.3s;
+      .about-section {
+        margin-top: 25px;
+        padding: 20px;
+        background-color: #fcf8f5;
+        border-radius: 10px;
+        line-height: 1.7;
+        color: #444;
+        border-left: 5px solid #5d3a21;
       }
 
-      .btn-save:hover {
-        background: #28a745;
-        transform: translateY(-2px);
+      .about-section h3 {
+        margin-top: 0;
+        color: #5d3a21;
+        font-size: 20px;
       }
 
       .back-link {
-        display: block;
-        text-align: center;
-        margin-top: 15px;
-        color: #5d3a21;
+        display: inline-block;
         text-decoration: none;
+        background: #5d3a21;
+        color: white;
+        padding: 12px 35px;
+        border-radius: 8px;
         font-weight: bold;
+        transition: 0.3s;
+        margin-top: 20px;
       }
 
       .back-link:hover {
-        text-decoration: underline;
+        background: #7a4a2a;
+        transform: translateY(-2px);
       }
     </style>
   </head>
@@ -138,63 +140,72 @@
       </div>
       <div class="user-info">
         <img
-          src="images/default-avtar1.jpg"
+          src="images/default-avtar.jpg"
           id="userAvatar"
           alt="User Avatar"
+          style="display: none"
         />
-        <span id="usernameDisplay">Admin Panel</span>
+        <span id="usernameDisplay">Welcome, Guest</span>
         <a href="#" id="logoutLink" style="display: none">Logout</a>
       </div>
     </div>
 
     <div class="main-content">
       <div class="info-card">
-        <h2>Edit Book Data</h2>
-        <form>
-          <label><i class="fa-solid fa-book"></i> Book Title:</label>
-          <input type="text" value="Learn C++" required />
+        <h2>Book Details</h2>
 
-          <label><i class="fa-solid fa-user-pen"></i> Author:</label>
-          <input type="text" value="Ahmed Ali" required />
+        <div class="detail-row">
+          <span class="label">Book Title:</span>
+          <span class="value">Learn C++ Programming</span>
+        </div>
 
-          <label><i class="fa-solid fa-hashtag"></i> Number of Pages:</label>
-          <input type="number" value="450" required />
+        <div class="detail-row">
+          <span class="label">Author:</span>
+          <span class="value">Ahmed Ali</span>
+        </div>
 
-          <label><i class="fa-solid fa-list"></i> Category:</label>
-          <select>
-            <option selected>Programming</option>
-            <option>Sciences</option>
-            <option>Novels</option>
-          </select>
+        <div class="detail-row">
+          <span class="label">Pages:</span>
+          <span class="value">450 Pages</span>
+        </div>
 
-          <label><i class="fa-solid fa-align-left"></i> About the Book:</label>
-          <textarea rows="4">
-This book covers C++ basics and advanced OOP concepts.</textarea
-          >
+        <div class="detail-row">
+          <span class="label">Published:</span>
+          <span class="value">2024</span>
+        </div>
 
-          <button type="submit" class="btn-save">Save Changes</button>
-        </form>
-        <a href="AdminDashboard.html" class="back-link">← Back to Dashboard</a>
+        <div class="about-section">
+          <h3>About the Book:</h3>
+          <p>
+            This book provides a deep dive into C++ fundamentals and advanced
+            Object-Oriented Programming (OOP). It is specially designed for
+            students at the Faculty of Computers and AI to build a strong logic
+            in software development.
+          </p>
+        </div>
+
+        <a href="SearchBooks.html" class="back-link">← Back to Books</a>
       </div>
     </div>
 
     <script>
-      const user = JSON.parse(localStorage.getItem("loggedInUser"));
+      const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
       const usernameDisplay = document.getElementById("usernameDisplay");
       const userAvatar = document.getElementById("userAvatar");
       const logoutLink = document.getElementById("logoutLink");
 
-      if (!user || user.role !== "admin") {
-        alert("Access Denied! Admins only.");
-        window.location.href = "Loginpage.html";
-      } else {
-        usernameDisplay.textContent = "Admin: " + user.username;
-        if (user.avatar) userAvatar.src = user.avatar;
+      if (loggedInUser) {
+        usernameDisplay.textContent = "Welcome, " + loggedInUser.username;
+        if (loggedInUser.avatar) userAvatar.src = loggedInUser.avatar;
+        userAvatar.style.display = "inline";
         logoutLink.style.display = "inline";
       }
 
       logoutLink.addEventListener("click", () => {
         localStorage.removeItem("loggedInUser");
+        userAvatar.style.display = "none";
+        logoutLink.style.display = "none";
+        usernameDisplay.textContent = "Welcome, Guest";
         window.location.href = "Loginpage.html";
       });
     </script>
