@@ -1,196 +1,39 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Borrowed Books - Digital Library</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-image: url("images/Library.png");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        min-height: 100vh;
-        margin: 0;
-        color: #333;
-      }
-
-      .navbar {
-        background: rgba(93, 58, 33, 0.85);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px 20px;
-        flex-wrap: wrap;
-        color: #fff;
-      }
-
-      .navbar a {
-        color: white;
-        text-decoration: none;
-        margin-left: 15px;
-        font-weight: bold;
-      }
-
-      .navbar a:hover {
-        text-decoration: underline;
-      }
-
-      .user-info {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .user-info img {
-        width: 35px;
-        height: 35px;
-        border-radius: 50%;
-        border: 2px solid #f1c40f;
-      }
-
-      .container {
-        max-width: 1000px;
-        margin: 50px auto;
-        background: rgba(255, 255, 255, 0.95);
-        padding: 30px;
-        border-radius: 15px;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-      }
-
-      h1 {
-        text-align: center;
-        color: #5d3a21;
-      }
-
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-      }
-
-      th,
-      td {
-        border: 1px solid #ddd;
-        padding: 12px;
-        text-align: center;
-      }
-
-      th {
-        background-color: #5d3a21;
-        color: white;
-      }
-
-      .status-borrowed {
-        color: orange;
-        font-weight: bold;
-      }
-
-      .status-returned {
-        color: green;
-        font-weight: bold;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="navbar">
-      <div class="nav-left">
-        <a href="Home.html">Digital Library 📖</a>
-        <a href="SearchBooks.html">Books</a>
-      </div>
-      <div class="user-info">
-        <img
-          src="images/default-avtar1.jpg"
-          id="userAvatar"
-          alt="User Avatar"
-        />
-        <span id="usernameDisplay">Welcome, Guest</span>
-        <a href="#" id="logoutLink" style="display: none">Logout</a>
-      </div>
+<head>
+  <meta charset="UTF-8" />
+  <title>My Borrowed Books - Digital Library</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="navbar">
+    <div class="nav-left">
+      <a href="Home.html">Digital Library 📖</a>
+      <a href="SearchBooks.html">Books</a>
+      <a href="BorrowedBooks.html">My Borrowed</a>
     </div>
-
-    <div class="container">
-      <h1>My Borrowed Books</h1>
-      <table id="booksTableBody">
-        <thead>
-          <tr>
-            <th>Book Name</th>
-            <th>Author</th>
-            <th>Borrow Date</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+    <div class="user-info">
+      <img src="images/avtar1.jpg" id="userAvatar" style="display:none;" />
+      <span id="usernameDisplay">Welcome Guest</span>
+      <a href="#" id="logoutLink" style="display:none; color: #ffd369;">Logout</a>
     </div>
+  </div>
 
-    <script>
-      const user = JSON.parse(localStorage.getItem("loggedInUser"));
-      const usernameDisplay = document.getElementById("usernameDisplay");
-      const userAvatar = document.getElementById("userAvatar");
-      const logoutLink = document.getElementById("logoutLink");
-      const tableBody = document.querySelector("#booksTableBody tbody");
+  <div class="container" style="max-width: 900px; margin: 50px auto; background: rgba(255,255,255,0.95); padding: 30px; border-radius: 15px;">
+    <h1 style="text-align: center; color: #5d3a21;">My Borrowed Books</h1>
+    <table id="borrowedTable" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+      <thead>
+        <tr style="background: #5d3a21; color: white;">
+          <th style="padding: 12px; border: 1px solid #ddd;">Book Name</th>
+          <th style="padding: 12px; border: 1px solid #ddd;">Author</th>
+          <th style="padding: 12px; border: 1px solid #ddd;">Status</th>
+        </tr>
+      </thead>
+      <tbody id="borrowedBody">
+        </tbody>
+    </table>
+  </div>
 
-      if (!user) {
-        alert("Please login first!");
-        window.location.href = "Loginpage.html";
-      } else {
-        usernameDisplay.textContent = user.username;
-        if (user.avatar) userAvatar.src = user.avatar;
-        logoutLink.style.display = "inline";
-      }
-
-      logoutLink.addEventListener("click", () => {
-        localStorage.removeItem("loggedInUser");
-        window.location.href = "Loginpage.html";
-      });
-
-      const borrowedBooks = [
-        {
-          name: "Java Basics",
-          author: "John",
-          date: "10/3/2025",
-          status: "borrowed",
-        },
-        {
-          name: "Networking Guide",
-          author: "Mike",
-          date: "15/3/2025",
-          status: "borrowed",
-        },
-      ];
-
-      const tbody = document.querySelector("#booksTableBody tbody");
-      borrowedBooks.forEach((book) => {
-        const tr = document.createElement("tr");
-
-        const tdName = document.createElement("td");
-        tdName.textContent = book.name;
-
-        const tdAuthor = document.createElement("td");
-        tdAuthor.textContent = book.author;
-
-        const tdDate = document.createElement("td");
-        tdDate.textContent = book.date;
-
-        const tdStatus = document.createElement("td");
-        tdStatus.textContent =
-          book.status.charAt(0).toUpperCase() + book.status.slice(1);
-        tdStatus.className =
-          book.status === "borrowed" ? "status-borrowed" : "status-returned";
-
-        tr.appendChild(tdName);
-        tr.appendChild(tdAuthor);
-        tr.appendChild(tdDate);
-        tr.appendChild(tdStatus);
-
-        tbody.appendChild(tr);
-      });
-    </script>
-  </body>
+  <script src="js/borrowed.js"></script>
+</body>
 </html>

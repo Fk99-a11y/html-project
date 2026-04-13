@@ -1,258 +1,61 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Search Books - Digital Library</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-
-    <style>
-      body {
-        font-family: "Segoe UI", Arial;
-        margin: 0;
-        padding: 0;
-        background-image: url("images/Library.png");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        min-height: 100vh;
-        color: #333;
-      }
-
-      .navbar {
-        background: rgba(93, 58, 33, 0.85);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px 20px;
-        flex-wrap: wrap;
-        color: #fff;
-      }
-
-      .navbar a {
-        color: white;
-        text-decoration: none;
-        margin-left: 15px;
-        font-weight: bold;
-      }
-
-      .navbar a:hover {
-        text-decoration: underline;
-      }
-
-      .user-info {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .user-info img {
-        width: 35px;
-        height: 35px;
-        border-radius: 50%;
-        border: 2px solid #f1c40f;
-        display: none;
-      }
-
-      .container {
-        width: 80%;
-        margin: 30px auto;
-      }
-
-      form {
-        background: rgba(255, 255, 255, 0.95);
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        display: flex;
-        flex-wrap: wrap;
-        gap: 15px;
-        align-items: flex-end;
-      }
-
-      form label {
-        font-weight: bold;
-        width: 100%;
-      }
-
-      form input,
-      form select {
-        padding: 8px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-        flex: 1 1 200px;
-      }
-
-      form button {
-        padding: 10px 20px;
-        background: #5d3a21;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-      }
-
-      form button:hover {
-        background: #7a4a2a;
-      }
-
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-      }
-
-      th,
-      td {
-        border: 1px solid #ddd;
-        padding: 12px;
-        text-align: center;
-      }
-
-      th {
-        background: #5d3a21;
-        color: white;
-      }
-
-      td.available {
-        color: green;
-        font-weight: bold;
-      }
-
-      td.not-available {
-        color: red;
-        font-weight: bold;
-      }
-    </style>
-  </head>
-
-  <body>
-    <div class="navbar">
-      <div>
-        <a href="Home.html">Digital Library 📖</a>
-        <a href="SearchBooks.html">Books</a>
-        <a href="UserView.html">Dashboard</a>
-      </div>
-
-      <div class="user-info">
-        <img src="images/avtar1.jpg" id="userAvatar" />
-
-        <span id="usernameDisplay">Welcome, Guest</span>
-
-        <a href="#" id="logoutLink" style="display: none">Logout</a>
-      </div>
+<head>
+  <meta charset="UTF-8" />
+  <title>Search Books - Digital Library</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+  <div class="navbar">
+    <div class="nav-left">
+      <a href="Home.html">Digital Library 📖</a>
+      <a href="SearchBooks.html">Books</a>
+      <a href="BorrowedBooks.html">My Borrowed</a>
     </div>
+    <div class="user-info">
+      <img src="images/avtar1.jpg" id="userAvatar" style="display:none;" />
+      <span id="usernameDisplay">Welcome Guest</span>
+      <a href="#" id="logoutLink" style="display:none; color: #ffd369; margin-left: 10px;">Logout</a>
+    </div>
+  </div>
 
-    <div class="container">
-      <h1>Search Books</h1>
-
-      <form id="searchForm">
-        <label for="title">Title:</label>
-        <input type="text" id="title" placeholder="Enter book title" />
-
-        <label for="author">Author:</label>
-        <input type="text" id="author" placeholder="Enter author name" />
-
-        <label for="category">Category:</label>
-
-        <select id="category">
-          <option value="">All</option>
-          <option value="Programming">Programming</option>
-          <option value="Database">Database</option>
-          <option value="Networking">Networking</option>
+  <div class="container" style="width: 85%; margin: 30px auto;">
+    <h2 style="color: white; text-align: center; text-shadow: 2px 2px 5px #000;">Search Our Collection</h2>
+    
+    <div class="search-section" style="background: rgba(255,255,255,0.9); padding: 20px; border-radius: 15px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+      <div class="search-box">
+        <label style="font-weight: bold; display: block;">Book Name</label>
+        <input type="text" id="nameSearch" placeholder="Search by title..." style="width: 100%; padding: 10px; margin-top: 5px;">
+      </div>
+      <div class="search-box">
+        <label style="font-weight: bold; display: block;">Author</label>
+        <input type="text" id="authorSearch" placeholder="Search by author..." style="width: 100%; padding: 10px; margin-top: 5px;">
+      </div>
+      <div class="search-box">
+        <label style="font-weight: bold; display: block;">Category</label>
+        <select id="categorySearch" style="width: 100%; padding: 10px; margin-top: 5px;">
+          <option value="">All Categories</option>
         </select>
-
-        <button type="submit">Search</button>
-      </form>
-
-      <h2>Search Results</h2>
-
-      <table id="booksTable">
-        <tr>
-          <th>Book Name</th>
-          <th>Author</th>
-          <th>Category</th>
-          <th>Status</th>
-        </tr>
-
-        <tr>
-          <td>HTML Guide</td>
-          <td>Mike</td>
-          <td>Programming</td>
-          <td class="available">Available</td>
-        </tr>
-
-        <tr>
-          <td>Database Basics</td>
-          <td>John</td>
-          <td>Database</td>
-          <td class="not-available">Not Available</td>
-        </tr>
-      </table>
+      </div>
     </div>
+    <button id="searchBtn" style="width: 100%; margin-top: 15px; padding: 12px; background: #5d3a21; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">Apply Filters</button>
 
-    <script>
-      const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    <table id="booksTable" style="width: 100%; margin-top: 25px; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden;">
+      <thead>
+        <tr style="background: #5d3a21; color: white;">
+          <th style="padding: 15px;">Name</th>
+          <th style="padding: 15px;">Author</th>
+          <th style="padding: 15px;">Category</th>
+          <th style="padding: 15px;">Status</th>
+        </tr>
+      </thead>
+      <tbody id="booksTableBody">
+        </tbody>
+    </table>
+  </div>
 
-      const usernameDisplay = document.getElementById("usernameDisplay");
-      const userAvatar = document.getElementById("userAvatar");
-      const logoutLink = document.getElementById("logoutLink");
-
-      if (user) {
-        usernameDisplay.textContent = "Welcome, " + user.username;
-
-        if (user.avatar) {
-          userAvatar.src = user.avatar;
-        }
-
-        userAvatar.style.display = "inline";
-
-        logoutLink.style.display = "inline";
-      }
-
-      logoutLink.addEventListener("click", function () {
-        localStorage.removeItem("loggedInUser");
-
-        window.location.href = "Loginpage.html";
-      });
-
-      document
-        .getElementById("searchForm")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
-
-          const title = document.getElementById("title").value.toLowerCase();
-          const author = document.getElementById("author").value.toLowerCase();
-          const category = document.getElementById("category").value;
-
-          const rows = document.querySelectorAll("#booksTable tr");
-
-          rows.forEach((row, index) => {
-            if (index === 0) return;
-
-            const tName = row.cells[0].textContent.toLowerCase();
-            const tAuthor = row.cells[1].textContent.toLowerCase();
-            const tCategory = row.cells[2].textContent;
-
-            if (
-              (title && !tName.includes(title)) ||
-              (author && !tAuthor.includes(author)) ||
-              (category && tCategory !== category)
-            ) {
-              row.style.display = "none";
-            } else {
-              row.style.display = "";
-            }
-          });
-        });
-    </script>
-  </body>
+  <script src="js/search.js"></script>
+</body>
 </html>

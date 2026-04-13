@@ -4,130 +4,24 @@
     <meta charset="UTF-8" />
     <title>User Dashboard - Digital Library</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-    <style>
-      body {
-        margin: 0;
-        font-family: "Segoe UI", Arial, sans-serif;
-        background-image: url("images/Library.png");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        min-height: 100vh;
-        color: #333;
-      }
 
-      .navbar {
-        background: rgba(93, 58, 33, 0.85);
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px 20px;
-        flex-wrap: wrap;
-        color: #fff;
-      }
-
-      .navbar a {
-        color: white;
-        text-decoration: none;
-        margin-left: 15px;
-        font-weight: bold;
-      }
-
-      .navbar a:hover {
-        text-decoration: underline;
-      }
-
-      .user-info {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .user-info img {
-        width: 35px;
-        height: 35px;
-        border-radius: 50%;
-        border: 2px solid #f1c40f;
-        display: none;
-      }
-
-      .container {
-        max-width: 900px;
-        margin: 50px auto;
-        background: rgba(255, 255, 255, 0.95);
-        color: #333;
-        padding: 30px;
-        border-radius: 15px;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-      }
-
-      h2 {
-        color: #5d3a21;
-        text-align: center;
-        margin-bottom: 20px;
-      }
-
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        background: #fff;
-      }
-
-      th,
-      td {
-        border: 1px solid #ddd;
-        padding: 12px;
-        text-align: center;
-      }
-
-      th {
-        background: #5d3a21;
-        color: white;
-      }
-
-      .book-link {
-        text-decoration: none;
-        color: #5d3a21;
-        font-weight: bold;
-        transition: 0.3s;
-        border-bottom: 1px dashed transparent;
-      }
-
-      .book-link:hover {
-        color: #e67e22;
-        border-bottom: 1px dashed #e67e22;
-      }
-
-      td.available {
-        color: green;
-        font-weight: bold;
-      }
-      td.not-available {
-        color: red;
-        font-weight: bold;
-      }
-    </style>
+     <link rel="stylesheet" href="css/style.css" />
+  
   </head>
+
   <body>
     <div class="navbar">
-      <div class="nav-left">
+      <div>
         <a href="Home.html">Digital Library 📖</a>
         <a href="SearchBooks.html">Books</a>
         <a href="Loginpage.html" id="loginLink">Login</a>
         <a href="SignUp.html" id="signupLink">Sign Up</a>
-        <a href="#" id="logoutLink" style="display: none">Logout</a>
+        <a href="#" id="logoutLink" style="display:none;">Logout</a>
       </div>
+
       <div class="user-info">
-        <img
-          src="images/default-avtar1.jpg"
-          id="userAvatar"
-          alt="User Avatar"
-        />
-        <span id="usernameDisplay">Welcome, Guest</span>
+        <img id="userAvatar" src="images/default-avtar1.jpg" />
+        <span id="usernameDisplay">Welcome Guest</span>
       </div>
     </div>
 
@@ -142,58 +36,11 @@
             <th>Status</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td>
-              <a href="BookInfo.html" class="book-link">Software Engineering</a>
-            </td>
-            <td>D. Ali</td>
-            <td class="available">Available</td>
-          </tr>
-          <tr>
-            <td>
-              <a href="BookInfo.html" class="book-link">Web Technology</a>
-            </td>
-            <td>Sarah Mahmoud</td>
-            <td class="not-available">Not Available</td>
-          </tr>
-          <tr>
-            <td><a href="BookInfo.html" class="book-link">Learn C++</a></td>
-            <td>Ahmed Ali</td>
-            <td class="available">Available</td>
-          </tr>
-        </tbody>
+
+        <tbody id="booksBody"></tbody>
       </table>
     </div>
 
-    <script>
-      const user = JSON.parse(localStorage.getItem("loggedInUser"));
-      const loginLink = document.getElementById("loginLink");
-      const signupLink = document.getElementById("signupLink");
-      const logoutLink = document.getElementById("logoutLink");
-      const usernameDisplay = document.getElementById("usernameDisplay");
-      const userAvatar = document.getElementById("userAvatar");
-
-      if (!user) {
-        alert("Please login first!");
-        window.location.href = "Loginpage.html";
-      } else {
-        if (user.role !== "user") {
-          alert("Admins should use Admin Dashboard!");
-          window.location.href = "AdminView.html";
-        }
-        usernameDisplay.textContent = "Welcome, " + user.username;
-        loginLink.style.display = "none";
-        signupLink.style.display = "none";
-        logoutLink.style.display = "inline";
-        if (user.avatar) userAvatar.src = user.avatar;
-        userAvatar.style.display = "inline";
-      }
-
-      logoutLink.addEventListener("click", () => {
-        localStorage.removeItem("loggedInUser");
-        window.location.href = "Loginpage.html";
-      });
-    </script>
+    <script src="js/userview.js"></script>
   </body>
 </html>
