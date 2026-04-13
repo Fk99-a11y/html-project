@@ -1,4 +1,4 @@
-
+// check login
 const user = JSON.parse(localStorage.getItem("loggedInUser"));
 
 if (!user) {
@@ -6,7 +6,7 @@ if (!user) {
   window.location.href = "Loginpage.html";
 }
 
-
+// get books
 let books = JSON.parse(localStorage.getItem("books")) || [];
 
 const form = document.getElementById("addBookForm");
@@ -21,7 +21,7 @@ form.addEventListener("submit", function (e) {
   const category = document.getElementById("category").value;
   const description = document.getElementById("description").value.trim();
 
-
+  // validation
   if (!id || !name || !author || !category || !description) {
     showMsg("All fields are required!", "red");
     return;
@@ -32,7 +32,7 @@ form.addEventListener("submit", function (e) {
     return;
   }
 
- 
+  // add book
   const newBook = {
     id,
     name,
@@ -49,7 +49,7 @@ form.addEventListener("submit", function (e) {
   form.reset();
 });
 
-
+// message function
 function showMsg(text, color) {
   msg.style.display = "block";
   msg.style.color = color;

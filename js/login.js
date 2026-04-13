@@ -47,8 +47,8 @@ form.addEventListener("submit", function (e) {
       userAvatar.src = user.avatar;
     }
 
-    userAvatar.style.display = "inline-block";;
-    logoutLink.style.display = "inline-block";;
+    userAvatar.style.display = "inline";
+    logoutLink.style.display = "inline";
 
     if (user.role === "admin") {
       window.location.href = "ViewBooks.html";
