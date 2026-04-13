@@ -1,5 +1,5 @@
 body {
-  background-image: url("../images/Library.png");
+  background-image: url("images/Library.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -14,6 +14,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .navbar a {
@@ -28,23 +30,26 @@ body {
   color: #ffd369;
 }
 
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+
+.search {
+  padding: 5px 8px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: none;
 }
 
-.user-info img {
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  border: 2px solid #ffd369;
-  display: none;
+.search-btn {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  margin-left: 5px;
+  font-size: 16px;
 }
+
 
 .login-card,
-.signup-card,
-.addbook-card {
+.signup-card {
   background: rgba(255, 255, 255, 0.95);
   padding: 30px;
   width: 350px;
@@ -53,10 +58,14 @@ body {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-.login-card h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #5d3a21;
+
+.addbook-card {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 30px;
+  width: 350px;
+  margin: 100px auto;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 .form-group input,
@@ -69,14 +78,8 @@ body {
   margin-bottom: 15px;
 }
 
-.form-group label {
-  font-weight: bold;
-  display: block;
-  margin-bottom: 5px;
-}
 
 button {
-  width: 100%;
   background: #5d3a21;
   color: white;
   padding: 10px;
@@ -89,28 +92,9 @@ button:hover {
   background: #7a4a2a;
 }
 
-.signup-link {
+
+.form-group label {
+  font-weight: bold;
   display: block;
-  margin-top: 15px;
-  text-align: center;
-  color: #5d3a21;
-  font-weight: bold;
-  text-decoration: none;
-}
-
-.signup-link:hover {
-  text-decoration: underline;
-}
-
-#error-msg {
-  color: red;
-  margin-bottom: 10px;
-  display: none;
-  text-align: center;
-}
-#msg {
-  text-align: center;
-  margin-bottom: 10px;
-  display: none;
-  font-weight: bold;
+  margin-bottom: 5px;
 }

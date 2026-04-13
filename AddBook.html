@@ -1,66 +1,70 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-  <head>
-    <title>Add Book</title>
-    <link rel="stylesheet" href="css/style.css" />
-  </head>
 
-  <body>
-    <!-- Navbar -->
-    <div class="navbar">
-      <a href="Homepage.html">Home</a>
-      <a href="AddBook.html">Add Book</a>
-      <a href="ViewBooks.html">View Books</a>
-      <a href="Loginpage.html">Logout</a>
-    </div>
+<head>
+  <title>Add Book</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 
-    <!-- Add Book Form -->
-    <div class="addbook-card">
-      <h2>Add New Book</h2>
+<body>
 
-      <div id="msg"></div>
 
-      <form id="addBookForm">
-        <div class="form-group">
-          <label>Book ID</label>
-          <input type="number" id="bookId" placeholder="Enter Book ID" />
-        </div>
+  <script>
+    const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    if (!user) {
+      alert("Please login first!");
+      window.location.href = "Loginpage.html";
+    }
+  </script>
 
-        <div class="form-group">
-          <label>Book Name</label>
-          <input type="text" id="bookName" placeholder="Enter Book Name" />
-        </div>
+  <!-- Navbar -->
+  <div class="navbar">
+    <a href="Homepage.html">Home</a>
+    <a href="AddBook.html">Add Book</a>
+    <a href="ViewBooks.html">View Books</a>
+    <a href="Loginpage.html">Logout</a>
+  </div>
 
-        <div class="form-group">
-          <label>Author</label>
-          <input type="text" id="author" placeholder="Enter Author Name" />
-        </div>
+  <!-- Add Book Form -->
+  <div class="addbook-card">
+    <h2>Add New Book</h2>
+    <form action="#">
+      <div class="form-group">
+        <label>Book ID</label>
+        <input type="number" placeholder="Enter Book ID" required>
+      </div>
 
-        <div class="form-group">
-          <label>Category</label>
-          <select id="category">
-            <option value="">Select Category</option>
-            <option>Fiction</option>
-            <option>Non-Fiction</option>
-            <option>Sci-Fi</option>
-            <option>Technology</option>
-            <option>History</option>
-          </select>
-        </div>
+      <div class="form-group">
+        <label>Book Name</label>
+        <input type="text" placeholder="Enter Book Name" required>
+      </div>
 
-        <div class="form-group">
-          <label>Description</label>
-          <textarea
-            id="description"
-            rows="4"
-            placeholder="Enter Book Description"
-          ></textarea>
-        </div>
+      <div class="form-group">
+        <label>Author</label>
+        <input type="text" placeholder="Enter Author Name" required>
+      </div>
 
-        <button type="submit">Add Book</button>
-      </form>
-    </div>
+      <div class="form-group">
+        <label>Category</label>
+        <select required>
+          <option value="">Select Category</option>
+          <option>Fiction</option>
+          <option>Non-Fiction</option>
+          <option>Sci-Fi</option>
+          <option>Technology</option>
+          <option>History</option>
+        </select>
+      </div>
 
-    <script src="js/addBook.js"></script>
-  </body>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea rows="4" placeholder="Enter Book Description" required></textarea>
+      </div>
+
+      <button type="submit">Add Book</button>
+    </form>
+  </div>
+
+</body>
+
 </html>
