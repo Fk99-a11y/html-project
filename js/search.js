@@ -1,15 +1,21 @@
-/**
- * search.js - Handles multi-criteria search and navigation to details
- */
 const currentUser = JSON.parse(localStorage.getItem("loggedInUser"));
 const books = JSON.parse(localStorage.getItem("books")) || [];
 
-// Navbar Handling
 if (currentUser) {
     document.getElementById("usernameDisplay").textContent = "Welcome, " + currentUser.username;
     const avatar = document.getElementById("userAvatar");
-    if (currentUser.avatar) { avatar.src = currentUser.avatar; avatar.style.display = "inline"; }
+    if (currentUser.avatar) {
+        avatar.src = currentUser.avatar;
+        avatar.style.display = "inline";
+    }
     document.getElementById("logoutLink").style.display = "inline";
+
+    if (currentUser.role === "admin") {
+        const borrowedLink = document.querySelector('a[href="BorrowedBooks.html"]');
+        if (borrowedLink) {
+            borrowedLink.style.display = "none";
+        }
+    }
 }
 
 document.getElementById("logoutLink").addEventListener("click", () => {
@@ -17,7 +23,6 @@ document.getElementById("logoutLink").addEventListener("click", () => {
     window.location.href = "Loginpage.html";
 });
 
-// Dynamic Categories
 const categorySelect = document.getElementById("categorySearch");
 const categories = [...new Set(books.map(b => b.category))].filter(Boolean);
 categories.forEach(cat => {
@@ -41,10 +46,10 @@ function displayFilteredBooks(list) {
                 ${book.available ? 'Available' : 'Not Available'}
             </td>
         `;
-        // Navigate to details page [cite: 88]
+
         tr.addEventListener("click", () => {
             localStorage.setItem("selectedBook", JSON.stringify(book));
-            window.location.href = "search.html"; 
+            window.location.href = "search.html";
         });
         tbody.appendChild(tr);
     });
@@ -55,7 +60,7 @@ document.getElementById("searchBtn").addEventListener("click", () => {
     const authorQuery = document.getElementById("authorSearch").value.toLowerCase();
     const catQuery = document.getElementById("categorySearch").value;
 
-    const filtered = books.filter(b => 
+    const filtered = books.filter(b =>
         (b.name.toLowerCase().includes(nameQuery)) &&
         (b.author.toLowerCase().includes(authorQuery)) &&
         (!catQuery || b.category === catQuery)
