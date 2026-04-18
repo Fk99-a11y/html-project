@@ -381,15 +381,20 @@ textarea {
 }
 #descBox {
   margin-top: 15px;
-  padding: 12px;
-  background: rgba(255, 255, 255, 0.9);
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.95);
   border-radius: 10px;
 
-  text-align: left; 
+  text-align: left;
   white-space: pre-wrap;
 
   word-break: break-word;
   overflow-wrap: anywhere;
 
-  line-height: 1.5;
+  line-height: 1.6;
+
+  max-height: 200px;   
+  overflow-y: auto;    
+
+  border: 1px solid #ddd;
 }
