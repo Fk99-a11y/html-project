@@ -36,7 +36,7 @@ function renderBooks() {
       <td>${book.name}</td>
       <td>${book.author}</td>
       <td class="desc-col">${book.description || "No description"}</td>
-      <td>
+      <td class="action-cell">
         <button class="btn-edit">Edit</button>
         <button class="btn-delete">Delete</button>
       </td>

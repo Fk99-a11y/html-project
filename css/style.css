@@ -1,3 +1,4 @@
+
 body {
   background-image: url("../images/Library.png");
   background-size: cover;
@@ -196,6 +197,31 @@ th, td {
   border: 1px solid #ddd;
   padding: 12px;
   text-align: center;
+  vertical-align: middle;
+  
+}
+
+td.desc-col {
+  text-align: left;
+  max-width: 300px;
+
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+ 
+.action-cell {
+  text-align: center;
+  vertical-align: middle;
+  justify-content: center;
+  align-items: center;
+  gap: 8px; 
+}
+
+.action-cell button {
+  margin: 0; 
+  white-space: nowrap;
+  display: inline-block;
 }
 
 th {
