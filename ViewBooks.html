@@ -58,7 +58,7 @@
       }
 
       .container {
-        max-width: 900px;
+        max-width: 1000px;
         margin: 50px auto;
         padding: 20px;
       }
@@ -83,6 +83,11 @@
         border: 1px solid #ddd;
         padding: 12px;
         text-align: center;
+      }
+      
+      td.desc-col {
+        text-align: left;
+        max-width: 300px;
       }
 
       th {
@@ -173,7 +178,7 @@
           <tr>
             <th>Book Name</th>
             <th>Author</th>
-            <th>Status / Control</th>
+            <th>Description</th> <th>Status / Control</th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -201,9 +206,9 @@
       });
 
       let books = JSON.parse(localStorage.getItem("books")) || [
-        { name: "Learn C++", author: "Ahmed Ali", status: "available" },
-        { name: "Software Engineering", author: "D. Ali", status: "available" },
-        { name: "Web Technology", author: "Sarah Mahmoud", status: "not" },
+        { name: "Learn C++", author: "Ahmed Ali", description: "A comprehensive guide to modern C++ programming.", status: "available" },
+        { name: "Software Engineering", author: "D. Ali", description: "Principles and practices of software engineering.", status: "available" },
+        { name: "Web Technology", author: "Sarah Mahmoud", description: "Fundamentals of web development including HTML, CSS, and JS.", status: "not" },
       ];
 
       const booksTableBody = document.querySelector("#booksTable tbody");
@@ -219,6 +224,10 @@
           const tdAuthor = document.createElement("td");
           tdAuthor.textContent = book.author;
 
+          const tdDesc = document.createElement("td");
+          tdDesc.className = "desc-col";
+          tdDesc.textContent = book.description || "No description provided.";
+
           const tdControl = document.createElement("td");
           const editBtn = document.createElement("button");
           editBtn.textContent = "Edit";
@@ -226,9 +235,11 @@
           editBtn.onclick = () => {
             const newName = prompt("Edit Book Name:", book.name);
             const newAuthor = prompt("Edit Author:", book.author);
+            const newDesc = prompt("Edit Description:", book.description || "");
             if (newName && newAuthor) {
               book.name = newName;
               book.author = newAuthor;
+              if (newDesc !== null) book.description = newDesc;
               localStorage.setItem("books", JSON.stringify(books));
               renderBooks();
             }
@@ -250,13 +261,13 @@
 
           tr.appendChild(tdName);
           tr.appendChild(tdAuthor);
+          tr.appendChild(tdDesc);
           tr.appendChild(tdControl);
 
           booksTableBody.appendChild(tr);
         });
       }
       
-
       renderBooks();
 
       document.getElementById("addBookBtn").addEventListener("click", () => {
