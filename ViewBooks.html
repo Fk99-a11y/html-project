@@ -4,10 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Library Books - Admin</title>
+
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
+
     <style>
       body {
         margin: 0;
@@ -63,10 +65,20 @@
         padding: 20px;
       }
 
-      h2 {
-        text-align: center;
-        color: #5d3a21;
+      .title-box {
+        background: rgba(255, 255, 255, 0.95);
+        padding: 15px;
+        border-radius: 12px;
         margin-bottom: 20px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        text-align: center;
+      }
+
+      .title-box h2 {
+        margin: 0;
+        color: #5d3a21;
+        font-weight: 900;
+        font-size: 28px;
       }
 
       table {
@@ -84,12 +96,17 @@
         padding: 12px;
         text-align: center;
       }
-      
-      td.desc-col {
-        text-align: left;
-        max-width: 300px;
-      }
 
+      td.desc-col {
+  text-align: left;
+  max-width: 300px;
+
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+
+  line-height: 1.4;
+}
       th {
         background-color: #5d3a21;
         color: white;
@@ -125,15 +142,6 @@
         transform: translateY(-2px);
       }
 
-      .status-available {
-        color: green;
-        font-weight: bold;
-      }
-      .status-not {
-        color: red;
-        font-weight: bold;
-      }
-
       .add-btn {
         background: #5d3a21;
         color: white;
@@ -152,25 +160,26 @@
       }
     </style>
   </head>
+
   <body>
     <div class="navbar">
       <div class="nav-left">
         <a href="Home.html">Digital Library 📖</a>
         <a href="SearchBooks.html">Books</a>
       </div>
+
       <div class="user-info">
-        <img
-          src="images/default-avtar1.jpg"
-          id="userAvatar"
-          alt="User Avatar"
-        />
+        <img src="images/default-avtar1.jpg" id="userAvatar" />
         <span id="usernameDisplay">Admin</span>
         <a href="#" id="logoutLink" style="display: none">Logout</a>
       </div>
     </div>
 
     <div class="container">
-      <h2>Admin Dashboard - Books List</h2>
+      <div class="title-box">
+        <h2>Admin Dashboard - Books List</h2>
+      </div>
+
       <button class="add-btn" id="addBookBtn">+ Add New Book</button>
 
       <table id="booksTable">
@@ -178,7 +187,8 @@
           <tr>
             <th>Book Name</th>
             <th>Author</th>
-            <th>Description</th> <th>Status / Control</th>
+            <th>Description</th>
+            <th>Status / Control</th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -187,6 +197,7 @@
 
     <script>
       const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+
       const usernameDisplay = document.getElementById("usernameDisplay");
       const logoutLink = document.getElementById("logoutLink");
       const userAvatar = document.getElementById("userAvatar");
@@ -206,72 +217,59 @@
       });
 
       let books = JSON.parse(localStorage.getItem("books")) || [
-        { name: "Learn C++", author: "Ahmed Ali", description: "A comprehensive guide to modern C++ programming.", status: "available" },
-        { name: "Software Engineering", author: "D. Ali", description: "Principles and practices of software engineering.", status: "available" },
-        { name: "Web Technology", author: "Sarah Mahmoud", description: "Fundamentals of web development including HTML, CSS, and JS.", status: "not" },
+        { name: "Learn C++", author: "Ahmed Ali", description: "C++ Guide", status: "available" },
+        { name: "Software Engineering", author: "D. Ali", description: "SE Basics", status: "available" },
+        { name: "Web Technology", author: "Sarah Mahmoud", description: "Web Dev", status: "not" }
       ];
 
       const booksTableBody = document.querySelector("#booksTable tbody");
 
       function renderBooks() {
         booksTableBody.innerHTML = "";
+
         books.forEach((book, index) => {
           const tr = document.createElement("tr");
 
-          const tdName = document.createElement("td");
-          tdName.textContent = book.name;
+          tr.innerHTML = `
+            <td>${book.name}</td>
+            <td>${book.author}</td>
+            <td class="desc-col">${book.description || "No description"}</td>
+            <td>
+              <button class="btn-edit">Edit</button>
+              <button class="btn-delete">Delete</button>
+            </td>
+          `;
 
-          const tdAuthor = document.createElement("td");
-          tdAuthor.textContent = book.author;
+          tr.querySelector(".btn-edit").onclick = () => {
+            const newName = prompt("Book Name", book.name);
+            const newAuthor = prompt("Author", book.author);
+            const newDesc = prompt("Description", book.description);
 
-          const tdDesc = document.createElement("td");
-          tdDesc.className = "desc-col";
-          tdDesc.textContent = book.description || "No description provided.";
-
-          const tdControl = document.createElement("td");
-          const editBtn = document.createElement("button");
-          editBtn.textContent = "Edit";
-          editBtn.className = "btn-edit";
-          editBtn.onclick = () => {
-            const newName = prompt("Edit Book Name:", book.name);
-            const newAuthor = prompt("Edit Author:", book.author);
-            const newDesc = prompt("Edit Description:", book.description || "");
             if (newName && newAuthor) {
-              book.name = newName;
-              book.author = newAuthor;
-              if (newDesc !== null) book.description = newDesc;
+              books[index].name = newName;
+              books[index].author = newAuthor;
+              books[index].description = newDesc;
               localStorage.setItem("books", JSON.stringify(books));
               renderBooks();
             }
           };
 
-          const delBtn = document.createElement("button");
-          delBtn.textContent = "Delete";
-          delBtn.className = "btn-delete";
-          delBtn.onclick = () => {
-            if (confirm(`Delete "${book.name}"?`)) {
+          tr.querySelector(".btn-delete").onclick = () => {
+            if (confirm("Delete this book?")) {
               books.splice(index, 1);
               localStorage.setItem("books", JSON.stringify(books));
               renderBooks();
             }
           };
 
-          tdControl.appendChild(editBtn);
-          tdControl.appendChild(delBtn);
-
-          tr.appendChild(tdName);
-          tr.appendChild(tdAuthor);
-          tr.appendChild(tdDesc);
-          tr.appendChild(tdControl);
-
           booksTableBody.appendChild(tr);
         });
       }
-      
+
       renderBooks();
 
       document.getElementById("addBookBtn").addEventListener("click", () => {
-       window.location.href = "AddBook.html";
+        window.location.href = "AddBook.html";
       });
     </script>
   </body>

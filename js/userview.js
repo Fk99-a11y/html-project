@@ -37,31 +37,34 @@
 
       function renderBooks() {
         tbody.innerHTML = "";
-
+      
         books.forEach((book, index) => {
           const tr = document.createElement("tr");
-
+      
+          tr.style.cursor = "pointer";
+      
+          tr.addEventListener("click", () => {
+            showDesc(index);
+          });
+      
           tr.innerHTML = `
-            <td>
-              <span class="book-link" onclick="showDesc(${index})">
-                ${book.name}
-              </span>
-            </td>
+            <td>${book.name}</td>
             <td>${book.author}</td>
             <td class="${book.available ? "available" : "not-available"}">
               ${book.available ? "Available" : "Not Available"}
             </td>
           `;
-
+      
           tbody.appendChild(tr);
         });
       }
-
       window.showDesc = function (index) {
-        alert(
-          "Description:\n" +
-            (books[index].description || "No description available")
-        );
+        const box = document.getElementById("descBox");
+      
+        box.style.display = "block";
+        box.textContent =
+          "Description: " +
+          (books[index].description || "No description available");
       };
 
       renderBooks();

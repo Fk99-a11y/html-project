@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
+
 <body>
   <div class="navbar">
     <div class="nav-left">
@@ -14,6 +15,7 @@
       <a href="SearchBooks.html">Books</a>
       <a href="BorrowedBooks.html">My Borrowed</a>
     </div>
+
     <div class="user-info">
       <img src="images/avtar1.jpg" id="userAvatar" style="display:none;" />
       <span id="usernameDisplay">Welcome Guest</span>
@@ -22,37 +24,51 @@
   </div>
 
   <div class="container" style="width: 85%; margin: 30px auto;">
-    <h2 style="color: white; text-align: center; text-shadow: 2px 2px 5px #000;">Search Our Collection</h2>
-    
+    <h2 style="color: rgb(188, 121, 6); text-align: center;">Search Our Collection</h2>
+
     <div class="search-section" style="background: rgba(255,255,255,0.9); padding: 20px; border-radius: 15px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+
       <div class="search-box">
-        <label style="font-weight: bold; display: block;">Book Name</label>
-        <input type="text" id="nameSearch" placeholder="Search by title..." style="width: 100%; padding: 10px; margin-top: 5px;">
+        <label>Book ID</label>
+        <input type="text" id="idSearch" placeholder="Search by ID..." />
       </div>
+
       <div class="search-box">
-        <label style="font-weight: bold; display: block;">Author</label>
-        <input type="text" id="authorSearch" placeholder="Search by author..." style="width: 100%; padding: 10px; margin-top: 5px;">
+        <label>Book Name</label>
+        <input type="text" id="nameSearch" placeholder="Search by title..." />
       </div>
+
       <div class="search-box">
-        <label style="font-weight: bold; display: block;">Category</label>
-        <select id="categorySearch" style="width: 100%; padding: 10px; margin-top: 5px;">
+        <label>Author</label>
+        <input type="text" id="authorSearch" placeholder="Search by author..." />
+      </div>
+
+      <div class="search-box">
+        <label>Category</label>
+        <select id="categorySearch">
           <option value="">All Categories</option>
         </select>
       </div>
     </div>
-    <button id="searchBtn" style="width: 100%; margin-top: 15px; padding: 12px; background: #5d3a21; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold;">Apply Filters</button>
 
-    <table id="booksTable" style="width: 100%; margin-top: 25px; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden;">
+    <button id="searchBtn">Apply Filters</button>
+
+    <br>
+    <br>
+
+    <div id="descBox"></div>
+
+    <table id="booksTable">
       <thead>
-        <tr style="background: #5d3a21; color: white;">
-          <th style="padding: 15px;">Name</th>
-          <th style="padding: 15px;">Author</th>
-          <th style="padding: 15px;">Category</th>
-          <th style="padding: 15px;">Status</th>
+        <tr>
+          <th>Name</th>
+          <th>Author</th>
+          <th>Category</th>
+          <th>Status</th>
         </tr>
       </thead>
-      <tbody id="booksTableBody">
-        </tbody>
+
+      <tbody id="booksTableBody"></tbody>
     </table>
   </div>
 
