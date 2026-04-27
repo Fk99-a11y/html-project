@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Edit Book - Digital Library</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+   <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="navbar">
+      <div class="nav-left">
+        <a href="Home.html">Digital Library 📖</a>
+        <a href="SearchBooks.html">Books</a>
+      </div>
+      <div class="user-info">
+        <img
+          src="images/default-avtar1.jpg"
+          id="userAvatar"
+          alt="User Avatar"
+        />
+        <span id="usernameDisplay">Admin Panel</span>
+        <a href="#" id="logoutLink" style="display: none">Logout</a>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <div class="info-card">
+        <h2>Edit Book Data</h2>
+        <form>
+          <label><i class="fa-solid fa-book"></i> Book Title:</label>
+          <input type="text" value="Learn C++" required />
+
+          <label><i class="fa-solid fa-user-pen"></i> Author:</label>
+          <input type="text" value="Ahmed Ali" required />
+
+          <label><i class="fa-solid fa-hashtag"></i> Number of Pages:</label>
+          <input type="number" value="450" required />
+
+          <label><i class="fa-solid fa-list"></i> Category:</label>
+          <select>
+            <option selected>Programming</option>
+            <option>Sciences</option>
+            <option>Novels</option>
+          </select>
+
+          <label><i class="fa-solid fa-align-left"></i> About the Book:</label>
+          <textarea rows="4">
+This book covers C++ basics and advanced OOP concepts.</textarea
+          >
+
+          <button type="submit" class="btn-save">Save Changes</button>
+        </form>
+        <a href="AdminView.html" class="back-link">← Back to Dashboard</a>
+      </div>
+    </div>
+
+    <script src="js/editbook.js"></script>
+  </body>
+</html>

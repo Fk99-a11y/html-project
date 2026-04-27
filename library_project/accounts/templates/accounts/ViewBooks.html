@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View Books - Admin</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body>
+    <div class="navbar">
+      <div class="nav-left">
+        <a href="Home.html">Digital Library 📖</a>
+        <a href="SearchBooks.html">Books</a>
+      </div>
+
+      <div class="user-info">
+        <img src="images/default-avtar1.jpg" id="userAvatar" />
+        <span id="usernameDisplay">Admin</span>
+        <a href="#" id="logoutLink" style="display:none;">Logout</a>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="title-box">
+        <h2>Admin Dashboard - Books List</h2>
+      </div>
+
+      <button class="add-btn" id="addBookBtn">+ Add New Book</button>
+
+      <table id="booksTable">
+        <thead>
+          <tr>
+            <th>Book Name</th>
+            <th>Author</th>
+            <th>Description</th>
+            <th>Control</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <script src="js/viewBook.js"></script>
+  </body>
+</html>

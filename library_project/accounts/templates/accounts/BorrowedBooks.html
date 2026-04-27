@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My Borrowed Books - Digital Library</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="navbar">
+    <div class="nav-left">
+      <a href="Home.html">Digital Library 📖</a>
+      <a href="SearchBooks.html">Books</a>
+      <a href="BorrowedBooks.html">My Borrowed</a>
+    </div>
+    <div class="user-info">
+      <img src="images/avtar1.jpg" id="userAvatar" style="display:none;" />
+      <span id="usernameDisplay">Welcome Guest</span>
+      <a href="#" id="logoutLink" style="display:none; color: #ffd369;">Logout</a>
+    </div>
+  </div>
+
+  <div class="container" style="max-width: 900px; margin: 50px auto; background: rgba(255,255,255,0.95); padding: 30px; border-radius: 15px;">
+    <h1 style="text-align: center; color: #5d3a21;">My Borrowed Books</h1>
+    <table id="borrowedTable" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+      <thead>
+        <tr style="background: #5d3a21; color: white;">
+          <th style="padding: 12px; border: 1px solid #ddd;">Book Name</th>
+          <th style="padding: 12px; border: 1px solid #ddd;">Author</th>
+          <th style="padding: 12px; border: 1px solid #ddd;">Status</th>
+        </tr>
+      </thead>
+      <tbody id="borrowedBody">
+        </tbody>
+    </table>
+  </div>
+
+  <script src="js/borrowed.js"></script>
+</body>
+</html>
