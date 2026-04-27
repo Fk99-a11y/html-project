@@ -1,0 +1,83 @@
+{% load static %}
+<!doctype html>
+<html>
+  <head>
+    <title>Signup</title>
+
+    <!-- 🔗 ربط الـ CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+
+  <body>
+    <div class="signup-card">
+      <h2 style="text-align: center; color: #5d3a21">Sign Up</h2>
+
+      <form method="POST">
+        {% csrf_token %}
+
+        <div class="form-group">
+          <input type="text" name="username" placeholder="Username" required />
+        </div>
+
+        <div class="form-group">
+          <input type="email" name="email" placeholder="Email" required />
+        </div>
+
+        <div class="form-group">
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+          />
+        </div>
+
+        <p style="font-weight: bold; text-align: center">
+          Choose Profile Image
+        </p>
+
+        <!-- 🧑‍🎨 Avatars -->
+        <div style="text-align: center">
+          <label class="signup-avatar">
+            <input type="radio" name="image" value="css/images/avtar1.jpg" />
+            <img src="{% static 'images/avtar1.jpg' %}" />
+          </label>
+
+          <label class="signup-avatar">
+            <input type="radio" name="image" value="css/images/avtar2.jpg" />
+            <img src="{% static 'images/avtar2.jpg' %}" />
+          </label>
+
+          <label class="signup-avatar">
+            <input type="radio" name="image" value="css/images/avtar3.jpg" />
+            <img src="{% static 'images/avtar3.jpg' %}" />
+          </label>
+
+          <label class="signup-avatar">
+            <input type="radio" name="image" value="css/images/avtar4.jpg" />
+            <img src="{% static 'images/avtar4.jpg' %}" />
+          </label>
+        </div>
+
+        <br />
+
+        <div class="admin-group">
+          <label>
+            <input type="checkbox" name="is_admin" />
+            Admin
+          </label>
+        </div>
+
+        <br />
+
+        <button type="submit">Sign Up</button>
+      </form>
+
+      {% if error %}
+      <p style="color: red; text-align: center">{{ error }}</p>
+      {% endif %}
+
+      <a class="signup-link" href="/login/">Login</a>
+    </div>
+  </body>
+</html>

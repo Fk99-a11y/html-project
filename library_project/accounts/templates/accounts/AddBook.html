@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head>
+  <title>Add Book</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+
+  <div class="navbar">
+    <a href="Home.html">Home</a>
+    <a href="AddBook.html">Add Book</a>
+    <a href="ViewBooks.html">View Books</a>
+    <a href="Loginpage.html">Logout</a>
+  </div>
+
+  <div class="addbook-card">
+    <h2>Add New Book</h2>
+
+    <div id="msg"></div>
+
+    <form id="addBookForm">
+
+      <div class="form-group">
+        <label>Book ID</label>
+        <input type="number" id="bookId" />
+      </div>
+
+      <div class="form-group">
+        <label>Book Name</label>
+        <input type="text" id="bookName" />
+      </div>
+
+      <div class="form-group">
+        <label>Author</label>
+        <input type="text" id="author" />
+      </div>
+
+      <div class="form-group">
+        <label>Category</label>
+        <input type="text" id="category" list="categoriesList" placeholder="Enter or choose category" />
+        <datalist id="categoriesList"></datalist>
+      </div>
+
+      <div class="form-group">
+        <label>Status</label>
+        <select id="available">
+          <option value="true">Available</option>
+          <option value="false">Not Available</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <textarea id="description"></textarea>
+      </div>
+
+      <button type="submit">Add Book</button>
+
+    </form>
+  </div>
+
+  <script src="js/addBook.js"></script>
+</body>
+</html>
