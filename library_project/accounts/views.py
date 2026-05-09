@@ -80,3 +80,12 @@ def home(request):
 
 def search_books(request):
     return render(request, 'accounts/search_books.html')
+
+def user_view(request):
+    return render(request, 'accounts/UserView.html')
+
+def admin_view(request):
+    return render(request, 'accounts/AdminView.html')
+
+def edit_book(request):
+    return render(request, 'accounts/EditBook.html')
