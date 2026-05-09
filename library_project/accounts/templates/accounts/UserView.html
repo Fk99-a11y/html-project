@@ -1,43 +1,57 @@
 {% load static %}
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Dashboard - Digital Library</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-  </head>
-
-  <body>
-    <div class="navbar">
-      <div>
-        <a href="{% url 'home' %}">Digital Library 📖</a>
-        <a href="{% url 'search_books' %}">Books</a>
-        <a href="{% url 'login' %}" id="loginLink">Login</a>
-        <a href="{% url 'signup' %}" id="signupLink">Sign Up</a>
-        <a href="{% url 'logout' %}" id="logoutLink" style="display:none;">Logout</a>
-      </div>
-
-      <div class="user-info">
-        <img id="userAvatar" src="{% static 'images/default-avtar1.jpg' %}" />
-        <span id="usernameDisplay">Welcome Guest</span>
-      </div>
-    </div>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Digital Library</div>
+        <div class="nav-links">
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'search_books' %}">Search</a>
+            <div class="user-info">
+                <img id="userAvatar" src="{% static 'images/default-avatar.jpg' %}" alt="Avatar">
+                <span id="usernameDisplay">Welcome, {{ user.username }}</span>
+                <a href="{% url 'logout' %}" id="logoutLink">Logout</a>
+            </div>
+        </div>
+    </nav>
 
     <div class="container">
-      <h2>User Dashboard - Available Books</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Book Name</th>
-            <th>Author</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody id="booksBody"></tbody>
-      </table>
+        <h2>Available Books</h2>
+        <table class="books-table">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="booksBody">
+                {% for book in books %}
+                <tr style="cursor: pointer;" onclick="showDesc('{{ book.description }}')">
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.author }}</td>
+                    <td class="{% if book.status %}available{% else %}not-available{% endif %}">
+                        {% if book.status %} Available {% else %} Not Available {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3">No books found in the library.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div id="descBox" class="description-box" style="display: none; margin-top: 20px; padding: 15px; border: 1px solid #ccc; background: #f9f9f9;">
+            </div>
     </div>
 
     <script src="{% static 'js/userview.js' %}"></script>
-  </body>
+</body>
 </html>

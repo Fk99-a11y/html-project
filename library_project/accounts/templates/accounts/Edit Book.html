@@ -1,36 +1,55 @@
 {% load static %}
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Book - Digital Library</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-  </head>
-  <body>
-    <div class="navbar">
-      <div class="nav-left">
-        <a href="{% url 'home' %}">Digital Library 📖</a>
-        <a href="{% url 'search_books' %}">Books</a>
-      </div>
-      <div class="user-info">
-        <img src="{% static 'images/default-avtar1.jpg' %}" id="userAvatar" alt="User Avatar" />
-        <span id="usernameDisplay">Admin Panel</span>
-        <a href="{% url 'logout' %}" id="logoutLink">Logout</a>
-      </div>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Admin Panel</div>
+        <div class="nav-links">
+            <a href="{% url 'admin_view' %}">Back to Dashboard</a>
+            <div class="user-info">
+                <span id="usernameDisplay">Admin: {{ user.username }}</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="form-container" style="max-width: 600px; margin: 40px auto; padding: 20px; border: 1px solid #ddd; border-radius: 8px; background: #fff;">
+            <h2>Edit Book Details</h2>
+            
+            <form method="POST" action="">
+                {% csrf_token %} <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px;">Book Title:</label>
+                    <input type="text" name="title" value="{{ book.title }}" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px;">Author:</label>
+                    <input type="text" name="author" value="{{ book.author }}" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px;">Category:</label>
+                    <input type="text" name="category" value="{{ book.category }}" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px;">Description:</label>
+                    <textarea name="description" rows="5" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;">{{ book.description }}</textarea>
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <button type="submit" style="background: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer;">Save Changes</button>
+                    <a href="{% url 'admin_view' %}" style="background: #f44336; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; text-align: center;">Cancel</a>
+                </div>
+            </form>
+        </div>
     </div>
 
-    <div class="main-content">
-      <div class="info-card">
-        <h2>Edit Book Data</h2>
-        <form method="POST"> {% csrf_token %} <label><i class="fa-solid fa-book"></i> Book Title:</label>
-          <input type="text" value="Learn C++" required />
-          <button type="submit" class="btn-save">Save Changes</button>
-        </form>
-        <a href="{% url 'home' %}" class="back-link">← Back to Dashboard</a>
-      </div>
-    </div>
-    <script src="{% static 'js/editbook.js' %}"></script>
-  </body>
+    </body>
 </html>

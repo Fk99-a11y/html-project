@@ -1,42 +1,62 @@
 {% load static %}
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-  </head>
-
-  <body>
-    <div class="navbar">
-      <div>
-        <a href="{% url 'home' %}">Digital Library 📖</a>
-        <a href="{% url 'search_books' %}">Books</a>
-      </div>
-      <div class="user-info">
-        <img id="userAvatar" src="{% static 'images/avtar1.jpg' %}" />
-        <span id="usernameDisplay">Welcome Guest</span>
-        <a href="{% url 'logout' %}" id="logoutLink">Logout</a>
-      </div>
-    </div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Digital Library</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Admin Panel</div>
+        <div class="nav-links">
+            <a href="{% url 'home' %}">Home</a>
+            <div class="user-info">
+                <img id="userAvatar" src="{% static 'images/admin-avatar.jpg' %}" alt="Admin">
+                <span id="usernameDisplay">Admin: {{ user.username }}</span>
+                <a href="{% url 'logout' %}" id="logoutLink">Logout</a>
+            </div>
+        </div>
+    </nav>
 
     <div class="container">
-      <h2>Admin Dashboard - Manage Books</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Book Name</th>
-            <th>Author</th>
-            <th>Category</th>
-            <th>Description</th>
-            <th>Control</th>
-          </tr>
-        </thead>
-        <tbody id="booksTableBody"></tbody>
-      </table>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h2>Manage Library Books</h2>
+            <a href="#" class="btn-add" style="background: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">+ Add New Book</a>
+        </div>
+
+        <table class="books-table" style="margin-top: 20px;">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Category</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="booksTableBody">
+                {% for book in books %}
+                <tr>
+                    <td>{{ book.title }}</td>
+                    <td>{{ book.author }}</td>
+                    <td>{{ book.category }}</td>
+                    <td style="max-width: 200px; font-size: 0.85em;">{{ book.description|truncatechars:50 }}</td>
+                    <td>
+                        <a href="{% url 'edit_book' %}" class="btn-edit" style="background: #2196F3; color: white; padding: 5px 10px; text-decoration: none; border-radius: 3px; font-size: 0.8em;">Edit</a>
+                        <a href="#" class="btn-delete" onclick="return confirmDelete()" style="background: #f44336; color: white; padding: 5px 10px; text-decoration: none; border-radius: 3px; font-size: 0.8em;">Delete</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">The library is currently empty.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
+
     <script src="{% static 'js/adminview.js' %}"></script>
-  </body>
+</body>
 </html>
