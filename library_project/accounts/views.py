@@ -82,8 +82,7 @@ def search_books(request):
     return render(request, 'accounts/search_books.html')
 
 def user_view(request):
-    return render(request, 'accounts/UserView.html')
-
+    return render(request, 'accounts/user_view.html')
 def admin_view(request):
     return render(request, 'accounts/AdminView.html')
 

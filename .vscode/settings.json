@@ -1,3 +1,4 @@
 {
-  "livePreview.defaultPreviewPath": "/SearchBooks.html"
+  "livePreview.defaultPreviewPath": "/SearchBooks.html",
+  "python-envs.defaultEnvManager": "ms-python.python:system"
 }
