@@ -13,8 +13,34 @@ class Profile(models.Model):
         return self.user.username
 
 
-
 @receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
+
+
+@receiver(post_save, sender=User)
+def save_profile(sender, instance, **kwargs):
+    if hasattr(instance, 'profile'):
+        instance.profile.save()
+
+
+class Book(models.Model):
+    title = models.CharField(max_length=200)
+    author = models.CharField(max_length=100)
+    category = models.CharField(max_length=100, blank=True, default='General')
+    description = models.TextField(blank=True, null=True)
+    status = models.BooleanField(default=True)  # True = Available
+
+    def __str__(self):
+        return self.title
+
+
+class BorrowRecord(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='borrow_records')
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='borrow_records')
+    borrowed_at = models.DateTimeField(auto_now_add=True)
+    returned = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.book.title}"

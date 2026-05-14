@@ -1,0 +1,70 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Book - Admin</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+</head>
+<body>
+
+  <div class="navbar">
+    <div class="nav-left">
+      <a href="{% url 'admin_view' %}">Admin Dashboard</a>
+      <a href="{% url 'add_book' %}">Add Book</a>
+    </div>
+    <div class="user-info">
+        <img id="userAvatar" src="{% static 'images/' %}{{ user.profile.image|default:'avtar1.jpg' }}" alt="Admin">
+        <span id="usernameDisplay">Admin: {{ user.username }}</span>
+        <a href="{% url 'logout' %}" id="logoutLink" style="color: #ffd369; margin-left: 10px; font-weight: bold;">Logout</a>
+    </div>
+  </div>
+
+  <div class="addbook-card">
+    <h2>Add New Book</h2>
+
+    {% if error %}
+      <div id="msg" style="display: block; color: red; text-align: center; margin-bottom: 15px; font-weight: bold;">{{ error }}</div>
+    {% endif %}
+
+    <form id="addBookForm" method="POST" action="{% url 'add_book' %}">
+      {% csrf_token %}
+
+      <div class="form-group">
+        <label>Book Title</label>
+        <input type="text" name="title" required />
+      </div>
+
+      <div class="form-group">
+        <label>Author</label>
+        <input type="text" name="author" required />
+      </div>
+
+      <div class="form-group">
+        <label>Category</label>
+        <input type="text" name="category" list="categoriesList" placeholder="Enter or choose category" required />
+        <datalist id="categoriesList">
+            {% for cat in categories %}
+                <option value="{{ cat }}"></option>
+            {% endfor %}
+        </datalist>
+      </div>
+
+      <div class="form-group">
+        <label>Status</label>
+        <select name="status">
+          <option value="true">Available</option>
+          <option value="false">Not Available</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <textarea name="description" rows="4"></textarea>
+      </div>
+
+      <button type="submit" class="btn-save">Add Book</button>
+    </form>
+  </div>
+</body>
+</html>

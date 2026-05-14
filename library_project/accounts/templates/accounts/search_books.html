@@ -10,15 +10,25 @@
 </head>
 
 <body>
-  <div class="nav-left">
-    <a href="{% url 'home' %}">Digital Library 📖</a>
-    <a href="{% url 'search_books' %}">Books</a>
-    <a href="{% url 'user_view' %}">My Borrowed</a> <!-- تأكد إذا كان هذا هو اسم رابط الـ Dashboard الخاص بك -->
-</div>
+  <div class="navbar">
+    <div class="nav-left">
+      <a href="{% url 'home' %}">Digital Library 📖</a>
+      <a href="{% url 'search_books' %}">Books</a>
+      {% if user.is_authenticated %}
+        <a href="{% url 'user_view' %}">My Dashboard</a>
+        <a href="{% url 'borrowed_books' %}">My Borrowed</a>
+      {% endif %}
+    </div>
+
     <div class="user-info">
-      <img src="images/avtar1.jpg" id="userAvatar" style="display:none;" />
-      <span id="usernameDisplay">Welcome Guest</span>
-      <a href="#" id="logoutLink" style="display:none; color: #ffd369; margin-left: 10px;">Logout</a>
+      {% if user.is_authenticated %}
+        <img src="{% static 'images/' %}{{ user.profile.image|default:'avtar1.jpg' }}" id="userAvatar" style="width:35px; height:35px; border-radius:50%; object-fit:cover;" />
+        <span id="usernameDisplay">Welcome, {{ user.username }}</span>
+        <a href="{% url 'logout' %}" id="logoutLink" style="color: #ffd369; margin-left: 10px; font-weight: bold;">Logout</a>
+      {% else %}
+        <span id="usernameDisplay">Welcome Guest</span>
+        <a href="{% url 'login' %}" style="color: #ffd369; margin-left: 10px; font-weight: bold;">Login</a>
+      {% endif %}
     </div>
   </div>
 
@@ -28,49 +38,76 @@
     <div class="search-section" style="background: rgba(255,255,255,0.9); padding: 20px; border-radius: 15px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
 
       <div class="search-box">
-        <label>Book ID</label>
-        <input type="text" id="idSearch" placeholder="Search by ID..." />
-      </div>
-
-      <div class="search-box">
         <label>Book Name</label>
-        <input type="text" id="nameSearch" placeholder="Search by title..." />
+        <input type="text" id="nameSearch" value="{{ query }}" placeholder="Search by title..." />
       </div>
 
       <div class="search-box">
         <label>Author</label>
-        <input type="text" id="authorSearch" placeholder="Search by author..." />
+        <input type="text" id="authorSearch" value="{{ author }}" placeholder="Search by author..." />
       </div>
 
       <div class="search-box">
         <label>Category</label>
         <select id="categorySearch">
           <option value="">All Categories</option>
+          {% for cat in categories %}
+            <option value="{{ cat }}" {% if selected_category == cat %}selected{% endif %}>{{ cat }}</option>
+          {% endfor %}
         </select>
       </div>
     </div>
 
-    <button id="searchBtn">Apply Filters</button>
+    <button id="searchBtn" style="margin-top: 15px;">Apply Filters</button>
 
-    <br>
-    <br>
+    <br><br>
 
-    <div id="descBox"></div>
+    <div id="descBox" style="display:none; margin-bottom:15px; padding:15px; background:white; border-radius:8px; border:1px solid #ddd; color:#5d3a21; font-weight:bold;"></div>
 
-    <table id="booksTable">
+    <table id="booksTable" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Author</th>
-          <th>Category</th>
-          <th>Status</th>
-          <th>Action</th>
+          <th style="background:#5d3a21; color:white; padding:10px;">Name</th>
+          <th style="background:#5d3a21; color:white; padding:10px;">Author</th>
+          <th style="background:#5d3a21; color:white; padding:10px;">Category</th>
+          <th style="background:#5d3a21; color:white; padding:10px;">Status</th>
+          <th style="background:#5d3a21; color:white; padding:10px;">Action</th>
         </tr>
       </thead>
 
-      <tbody id="booksTableBody"></tbody>
+      <tbody id="booksTableBody">
+        {% for book in books %}
+        <tr style="cursor: pointer; text-align: center; border-bottom: 1px solid #ddd;" onclick="showDesc('{{ book.description|escapejs }}')">
+          <td style="padding: 10px;">{{ book.title }}</td>
+          <td style="padding: 10px;">{{ book.author }}</td>
+          <td style="padding: 10px;">{{ book.category }}</td>
+          <td style="color:{% if book.status %}green{% else %}red{% endif %}; font-weight:bold; padding: 10px;">
+            {% if book.status %}Available{% else %}Not Available{% endif %}
+          </td>
+          <td style="padding: 10px;">
+            {% if user.is_authenticated %}
+              {% if book.status %}
+                <form method="POST" action="{% url 'borrow_book' book.id %}" style="margin:0;">
+                  {% csrf_token %}
+                  <button type="submit" style="background:#5d3a21; color:white; border:none; padding:5px 10px; border-radius:5px; cursor:pointer;">Borrow</button>
+                </form>
+              {% else %}
+                <button disabled style="background:#ccc; color:white; border:none; padding:5px 10px; border-radius:5px;">Unavailable</button>
+              {% endif %}
+            {% else %}
+              <a href="{% url 'login' %}" style="color: #5d3a21; font-weight: bold;">Login to borrow</a>
+            {% endif %}
+          </td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="5" style="text-align:center; padding: 20px;">No books found matching your search.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
     </table>
   </div>
 
-<script src="{% static 'js/search.js' %}"></script></body>
+  <script src="{% static 'js/search.js' %}"></script>
+</body>
 </html>

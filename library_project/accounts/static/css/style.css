@@ -8,43 +8,95 @@ body {
   font-family: Arial, sans-serif;
 }
 
-/* ================= NAVBAR ================= */
-
+/* ================= NAVBAR & NAV-LEFT ================= */
 .navbar {
-  background: rgba(93, 58, 33, 0.85);
+  background: rgba(93, 58, 33, 0.95);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 30px;
+  padding: 12px 30px;
   color: #fff;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-.navbar a {
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 15px; /* Puts the menu button and text side-by-side smoothly */
+}
+
+.nav-left a, .navbar a.brand {
   color: white;
-  margin: 0 10px;
   text-decoration: none;
-  font-size: 18px;
-  font-weight: 900;
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  transition: color 0.3s;
 }
 
-.navbar a:hover {
+.nav-left a:hover, .navbar a.brand:hover {
   color: #ffd369;
 }
 
-.nav-left a {
-  color: white;
-  text-decoration: none;
-  margin-right: 20px;
-  font-size: 18px;
-  font-weight: 900;
+/* ================= MENU BUTTON ================= */
+.menu {
+  position: relative;
 }
 
-.nav-left a:hover {
-  color: #ffd369;
+.menu-btn {
+  font-size: 18px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: white;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 6px;
+  transition: 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: white;
+}
+
+/* ================= DROPDOWN MENU CONTENT ================= */
+.menu-content {
+  display: none; /* Hidden by default */
+  position: absolute;
+  background: white;
+  min-width: 170px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  top: 60px; /* Pushes it just below the navbar */
+  left: 30px;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+/* This is the missing class that makes the JS work! */
+.menu-content.open {
+  display: block; 
+}
+
+.menu-content a {
+  display: block;
+  padding: 12px 15px;
+  text-decoration: none;
+  color: #5d3a21;
+  font-weight: bold;
+  border-bottom: 1px solid #eee;
+  transition: 0.3s;
+}
+
+.menu-content a:hover {
+  background: #f4f4f4;
+  color: #d35400;
 }
 
 /* ================= USER ================= */
-
 .user-info {
   display: flex;
   align-items: center;
@@ -59,18 +111,13 @@ body {
   display: inline;
   object-fit: cover;
 }
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
 
 .user-info span {
   color: white;
   font-weight: bold;
 }
-/* ================= CARDS ================= */
 
+/* ================= CARDS ================= */
 .login-card,
 .signup-card,
 .addbook-card {
@@ -83,7 +130,6 @@ body {
 }
 
 /* ================= FORM ================= */
-
 .login-card h2 {
   text-align: center;
   margin-bottom: 20px;
@@ -124,7 +170,6 @@ label {
 }
 
 /* ================= BUTTONS ================= */
-
 button {
   width: 100%;
   background: #5d3a21;
@@ -190,7 +235,6 @@ button:hover {
 }
 
 /* ================= LINKS ================= */
-
 .signup-link,
 .back-link {
   display: block;
@@ -207,7 +251,6 @@ button:hover {
 }
 
 /* ================= ERROR ================= */
-
 #error-msg {
   color: red;
   margin-bottom: 10px;
@@ -222,43 +265,7 @@ button:hover {
   margin-bottom: 10px;
 }
 
-/* ================= MENU ================= */
-
-.menu {
-  position: relative;
-}
-
-.menu-btn {
-  font-size: 22px;
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-}
-
-.menu-content {
-  display: none;
-  position: absolute;
-  background: white;
-  min-width: 170px;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-  border-radius: 8px;
-  top: 30px;
-}
-
-.menu-content a {
-  display: block;
-  padding: 10px;
-  text-decoration: none;
-  color: #333;
-}
-
-.menu-content a:hover {
-  background: #eee;
-}
-
 /* ================= MAIN ================= */
-
 .main-content {
   max-width: 600px;
   margin: 60px auto;
@@ -282,7 +289,6 @@ button:hover {
 }
 
 /* ================= TABLE ================= */
-
 table {
   width: 100%;
   border-collapse: collapse;
@@ -319,7 +325,6 @@ td.desc-col {
 }
 
 /* ================= INFO BOX ================= */
-
 .info-card {
   background: rgba(255, 255, 255, 0.95);
   color: #333;
@@ -338,7 +343,6 @@ td.desc-col {
 }
 
 /* ================= STATUS ================= */
-
 .available {
   color: green;
   font-weight: bold;
@@ -350,7 +354,6 @@ td.desc-col {
 }
 
 /* ================= DESC BOX ================= */
-
 #descBox {
   margin-top: 15px;
   padding: 15px;
@@ -367,7 +370,6 @@ td.desc-col {
 }
 
 /* ================= AVATAR ================= */
-
 .signup-avatar input {
   display: none;
 }
@@ -387,7 +389,6 @@ td.desc-col {
 }
 
 /* ================= VALIDATION ================= */
-
 .input-error {
   border: 2px solid red !important;
 }
@@ -397,7 +398,6 @@ td.desc-col {
 }
 
 /* ================= STRONG PASSWORD BAR ================= */
-
 .strength-bar {
   height: 6px;
   width: 100%;

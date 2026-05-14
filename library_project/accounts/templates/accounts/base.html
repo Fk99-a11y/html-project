@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}Digital Library{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-left">
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+    <a href="{% url 'home' %}" class="brand">📖 Digital Library</a>
+  </div>
+
+  <div class="menu-content" id="menuContent">
+    <a href="{% url 'home' %}">Home</a>
+    <a href="{% url 'search_books' %}">Books</a>
+    {% if user.is_authenticated %}
+      {% if user.is_staff %}
+        <a href="{% url 'admin_view' %}">Admin Panel</a>
+      {% else %}
+        <a href="{% url 'user_view' %}">Dashboard</a>
+        <a href="{% url 'borrowed_books' %}">My Books</a>
+      {% endif %}
+      <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+      <a href="{% url 'login' %}">Login</a>
+      <a href="{% url 'signup' %}">Sign Up</a>
+    {% endif %}
+  </div>
+
+  <div class="user-info">
+    {% if user.is_authenticated %}
+      <img id="userAvatar" src="{% static 'images/' %}{{ user.profile.image }}" alt="Avatar" />
+      <span id="usernameDisplay">
+        {% if user.profile.is_admin %}Admin: {% else %}Welcome, {% endif %}{{ user.username }}
+      </span>
+    {% else %}
+      <span>Welcome, Guest</span>
+    {% endif %}
+  </div>
+</nav>
+
+{% if messages %}
+  <div class="messages">
+    {% for message in messages %}
+      <div class="message message-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+  </div>
+{% endif %}
+
+{% block content %}{% endblock %}
+
+<script>
+function toggleMenu() {
+  const menu = document.getElementById("menuContent");
+  menu.classList.toggle("open");
+}
+</script>
+{% block extra_js %}{% endblock %}
+</body>
+</html>

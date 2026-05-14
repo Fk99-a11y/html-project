@@ -9,54 +9,71 @@
 </head>
 <body>
     <nav class="navbar">
-        <div class="logo">Admin Panel</div>
-        <div class="nav-links">
-            <a href="{% url 'home' %}">Home</a>
+        <div class="nav-left">
+            <a href="{% url 'home' %}" class="brand">Admin Panel</a>
+        </div>
+        <div class="nav-links" style="display: flex; align-items: center; gap: 20px;">
+            <a href="{% url 'home' %}" style="color: white; text-decoration: none; font-weight: bold;">Home</a>
             <div class="user-info">
-                <img id="userAvatar" src="{% static 'images/admin-avatar.jpg' %}" alt="Admin">
+                <img id="userAvatar" src="{% static 'images/' %}{{ user.profile.image|default:'avtar1.jpg' }}" alt="Admin">
                 <span id="usernameDisplay">Admin: {{ user.username }}</span>
-                <a href="{% url 'logout' %}" id="logoutLink">Logout</a>
+                <a href="{% url 'logout' %}" id="logoutLink" style="color: #ffd369; margin-left: 10px; font-weight: bold;">Logout</a>
             </div>
         </div>
     </nav>
 
     <div class="container">
+        
+        {% if messages %}
+          <div class="messages" style="margin-bottom: 20px;">
+            {% for message in messages %}
+              <div style="padding: 10px; border-radius: 5px; color: white; font-weight: bold; background-color: {% if message.tags == 'success' %}#28a745{% else %}#dc3545{% endif %}; margin-bottom: 10px;">
+                {{ message }}
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
         <div style="display: flex; justify-content: space-between; align-items: center;">
             <h2>Manage Library Books</h2>
-            <a href="#" class="btn-add" style="background: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">+ Add New Book</a>
+            <a href="{% url 'add_book' %}" class="btn-add" style="background: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">+ Add New Book</a>
         </div>
 
-        <table class="books-table" style="margin-top: 20px;">
+        <table class="books-table" style="margin-top: 20px; width: 100%; border-collapse: collapse;">
             <thead>
                 <tr>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Category</th>
-                    <th>Description</th>
-                    <th>Actions</th>
+                    <th style="background:#5d3a21; color:white; padding:10px;">Title</th>
+                    <th style="background:#5d3a21; color:white; padding:10px;">Author</th>
+                    <th style="background:#5d3a21; color:white; padding:10px;">Category</th>
+                    <th style="background:#5d3a21; color:white; padding:10px;">Status</th>
+                    <th style="background:#5d3a21; color:white; padding:10px;">Actions</th>
                 </tr>
             </thead>
             <tbody id="booksTableBody">
                 {% for book in books %}
-                <tr>
-                    <td>{{ book.title }}</td>
-                    <td>{{ book.author }}</td>
-                    <td>{{ book.category }}</td>
-                    <td style="max-width: 200px; font-size: 0.85em;">{{ book.description|truncatechars:50 }}</td>
-                    <td>
-                        <a href="{% url 'edit_book' %}" class="btn-edit" style="background: #2196F3; color: white; padding: 5px 10px; text-decoration: none; border-radius: 3px; font-size: 0.8em;">Edit</a>
-                        <a href="#" class="btn-delete" onclick="return confirmDelete()" style="background: #f44336; color: white; padding: 5px 10px; text-decoration: none; border-radius: 3px; font-size: 0.8em;">Delete</a>
+                <tr style="text-align: center; border-bottom: 1px solid #ddd;">
+                    <td style="padding: 10px;">{{ book.title }}</td>
+                    <td style="padding: 10px;">{{ book.author }}</td>
+                    <td style="padding: 10px;">{{ book.category }}</td>
+                    <td style="padding: 10px; color:{% if book.status %}green{% else %}red{% endif %}; font-weight:bold;">
+                        {% if book.status %}Available{% else %}Not Available{% endif %}
+                    </td>
+                    <td style="padding: 10px;">
+                        <a href="{% url 'edit_book' book.id %}" class="btn-edit" style="background: #2196F3; color: white; padding: 6px 12px; text-decoration: none; border-radius: 3px; font-size: 0.9em; margin-right: 5px;">Edit</a>
+                        
+                        <form method="POST" action="{% url 'delete_book' book.id %}" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete {{ book.title|escapejs }}?');">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-delete" style="background: #f44336; color: white; padding: 6px 12px; border: none; border-radius: 3px; font-size: 0.9em; cursor: pointer;">Delete</button>
+                        </form>
                     </td>
                 </tr>
                 {% empty %}
                 <tr>
-                    <td colspan="5">The library is currently empty.</td>
+                    <td colspan="5" style="padding: 20px; text-align: center;">The library is currently empty.</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
-
-    <script src="{% static 'js/adminview.js' %}"></script>
 </body>
 </html>

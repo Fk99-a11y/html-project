@@ -1,13 +1,14 @@
 const form = document.getElementById("signupForm");
-
 const username = document.querySelector('input[name="username"]');
 const email = document.querySelector('input[name="email"]');
 const password = document.querySelector('input[name="password"]');
 
-function showError(input, message) {
+function showError(input, message)
+{
   let error = input.nextElementSibling;
 
-  if (!error || !error.classList.contains("error-text")) {
+  if (!error || !error.classList.contains("error-text"))
+  {
     error = document.createElement("div");
     error.classList.add("error-text");
     input.parentNode.appendChild(error);
@@ -17,10 +18,12 @@ function showError(input, message) {
   input.classList.add("input-error");
 }
 
-function clearError(input) {
+function clearError(input)
+{
   let error = input.nextElementSibling;
 
-  if (error && error.classList.contains("error-text")) {
+  if (error && error.classList.contains("error-text"))
+  {
     error.textContent = "";
   }
 
@@ -30,9 +33,12 @@ function clearError(input) {
 email.addEventListener("input", () => {
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  if (!regex.test(email.value)) {
+  if (!regex.test(email.value))
+  {
     showError(email, "Invalid email format");
-  } else {
+  }
+  else
+  {
     clearError(email);
   }
 });
@@ -52,38 +58,47 @@ password.addEventListener("input", () => {
   else if (strength === 2) msg = "Medium";
   else msg = "Strong";
 
-  let error = password.nextElementSibling;
-
-  if (!error || !error.classList.contains("error-text")) {
-    error = document.createElement("div");
-    error.classList.add("error-text");
-    password.parentNode.appendChild(error);
+  let strengthDiv = document.getElementById("password-strength-msg");
+  
+  if (!strengthDiv)
+  {
+    strengthDiv = document.createElement("div");
+    strengthDiv.id = "password-strength-msg";
+    strengthDiv.style.fontWeight = "bold";
+    strengthDiv.style.marginTop = "5px";
+    password.parentNode.appendChild(strengthDiv);
   }
 
-  error.textContent = "Password strength: " + msg;
+  strengthDiv.textContent = "Password strength: " + msg;
+  if (msg === "Weak") strengthDiv.style.color = "red";
+  if (msg === "Medium") strengthDiv.style.color = "orange";
+  if (msg === "Strong") strengthDiv.style.color = "green";
 });
 
 form.addEventListener("submit", function (e) {
   let valid = true;
-
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  if (username.value.trim().length < 3) {
+  if (username.value.trim().length < 3)
+  {
     showError(username, "Username must be at least 3 characters");
     valid = false;
   }
 
-  if (!emailRegex.test(email.value)) {
+  if (!emailRegex.test(email.value))
+  {
     showError(email, "Invalid email format");
     valid = false;
   }
 
-  if (password.value.length < 6) {
+  if (password.value.length < 6)
+  {
     showError(password, "Password must be at least 6 characters");
     valid = false;
   }
 
-  if (!valid) {
+  if (!valid)
+  {
     e.preventDefault();
   }
 });

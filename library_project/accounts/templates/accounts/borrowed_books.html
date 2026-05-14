@@ -1,0 +1,76 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Borrowed Books - Digital Library</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <button class="menu-btn" onclick="toggleMenu()">☰</button>
+            <a href="{% url 'home' %}" class="brand">Digital Library 📖</a>
+            <a href="{% url 'search_books' %}">Search</a>
+            <a href="{% url 'user_view' %}">My Dashboard</a>
+        </div>
+        
+        <div class="menu-content" id="menuContent">
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'search_books' %}">Books</a>
+            <a href="{% url 'user_view' %}">Dashboard</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        {% if messages %}
+          <div class="messages" style="margin-bottom: 20px;">
+            {% for message in messages %}
+              <div style="padding: 10px; border-radius: 5px; color: white; font-weight: bold; background-color: #28a745; margin-bottom: 10px;">
+                {{ message }}
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <h2>My Borrowed Books</h2>
+        <table class="books-table" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+            <thead>
+                <tr>
+                    <th style="background:#5d3a21; color:white; padding:10px;">Title</th>
+                    <th style="background:#5d3a21; color:white; padding:10px;">Author</th>
+                    <th style="background:#5d3a21; color:white; padding:10px;">Status</th>
+                    <th style="background:#5d3a21; color:white; padding:10px;">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in records %}
+                <tr style="text-align: center; border-bottom: 1px solid #ddd;">
+                    <td style="padding: 10px;">{{ record.book.title }}</td>
+                    <td style="padding: 10px;">{{ record.book.author }}</td>
+                    <td style="padding: 10px; color: orange; font-weight: bold;">Borrowed</td>
+                    <td style="padding: 10px;">
+                        <form method="POST" action="{% url 'return_book' record.book.id %}" style="margin: 0;">
+                            {% csrf_token %}
+                            <button type="submit" style="background:#dc3545; color:white; padding:5px 15px; border:none; border-radius:5px; cursor:pointer; font-weight:bold;">Return</button>
+                        </form>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" style="text-align:center; padding: 20px; font-weight: bold; color: #5d3a21;">You haven't borrowed any books yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+    function toggleMenu() {
+        const menu = document.getElementById("menuContent");
+        menu.classList.toggle("open");
+    }
+    </script>
+</body>
+</html>

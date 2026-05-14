@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Book - Digital Library</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <a href="{% url 'admin_view' %}" class="brand">Admin Panel</a>
+        </div>
+        <div class="nav-links" style="display: flex; align-items: center; gap: 20px;">
+            <a href="{% url 'admin_view' %}" style="color: white; text-decoration: none; font-weight: bold;">Back to Dashboard</a>
+            <div class="user-info">
+                <img id="userAvatar" src="{% static 'images/' %}{{ user.profile.image|default:'avtar1.jpg' }}" alt="Admin">
+                <span id="usernameDisplay">Admin: {{ user.username }}</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="form-container" style="max-width: 600px; margin: 40px auto; padding: 30px; border-radius: 8px; background: rgba(255,255,255,0.95); box-shadow: 0 5px 15px rgba(0,0,0,0.3);">
+            <h2 style="color: #5d3a21; text-align: center; margin-top: 0;">Edit Book Details</h2>
+            
+            {% if error %}
+              <div style="color: red; text-align: center; font-weight: bold; margin-bottom: 10px;">{{ error }}</div>
+            {% endif %}
+
+            <form method="POST" action="{% url 'edit_book' book.id %}">
+                {% csrf_token %} 
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #7a4a2a;">Book Title:</label>
+                    <input type="text" name="title" value="{{ book.title }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #7a4a2a;">Author:</label>
+                    <input type="text" name="author" value="{{ book.author }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+                </div>
+
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #7a4a2a;">Category:</label>
+                    <input type="text" name="category" value="{{ book.category }}" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" required>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #7a4a2a;">Status:</label>
+                    <select name="status" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+                        <option value="true" {% if book.status %}selected{% endif %}>Available</option>
+                        <option value="false" {% if not book.status %}selected{% endif %}>Not Available</option>
+                    </select>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold; color: #7a4a2a;">Description:</label>
+                    <textarea name="description" rows="5" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">{{ book.description }}</textarea>
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <button type="submit" style="background: #4CAF50; color: white; padding: 12px 20px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; flex: 1;">Save Changes</button>
+                    <a href="{% url 'admin_view' %}" style="background: #f44336; color: white; padding: 12px 20px; text-decoration: none; border-radius: 4px; text-align: center; font-weight: bold; flex: 1;">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

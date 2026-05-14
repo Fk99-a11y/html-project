@@ -9,41 +9,58 @@
 </head>
 <body>
     <nav class="navbar">
-        <div class="logo">Digital Library</div>
-        <div class="nav-links">
-            <a href="{% url 'home' %}">Home</a>
-            <a href="{% url 'search_books' %}">Search</a>
-            <div class="user-info">
-                <img id="userAvatar" src="{% static 'images/default-avatar.jpg' %}" alt="Avatar">
-                <span id="usernameDisplay">Welcome, {{ user.username }}</span>
-                <a href="{% url 'logout' %}" id="logoutLink">Logout</a>
-            </div>
+        <div class="nav-left">
+            <a href="{% url 'home' %}" style="color: white; font-size: 18px; font-weight: bold; text-decoration: none;">Digital Library 📖</a>
+            <a href="{% url 'search_books' %}" style="margin-left: 20px; color: white; text-decoration: none;">Search</a>
+            <a href="{% url 'borrowed_books' %}" style="margin-left: 20px; color: white; text-decoration: none;">My Borrowed</a>
+        </div>
+        <div class="user-info">
+            <img id="userAvatar" src="{% static 'images/' %}{{ user.profile.image|default:'avtar1.jpg' }}" alt="Avatar" style="width:35px; height:35px; border-radius:50%; object-fit:cover;">
+            <span id="usernameDisplay">Welcome, {{ user.username }}</span>
+            <a href="{% url 'logout' %}" id="logoutLink" style="color: #ffd369; margin-left: 10px; font-weight: bold;">Logout</a>
         </div>
     </nav>
 
     <div class="container">
+        
+        {% if messages %}
+          <div class="messages" style="margin-bottom: 20px;">
+            {% for message in messages %}
+              <div style="padding: 10px; border-radius: 5px; color: white; font-weight: bold; background-color: {% if message.tags == 'success' %}#28a745{% elif message.tags == 'error' %}#dc3545{% else %}#ffc107{% endif %}; margin-bottom: 10px;">
+                {{ message }}
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+
         <h2>Available Books</h2>
-        <table class="books-table">
+        <table class="books-table" style="width: 100%; border-collapse: collapse; margin-top: 20px;">
             <thead>
                 <tr>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Status</th>
-                    <th>Action</th> </tr>
+                    <th style="background:#5d3a21; color:white; padding:10px;">Title</th>
+                    <th style="background:#5d3a21; color:white; padding:10px;">Author</th>
+                    <th style="background:#5d3a21; color:white; padding:10px;">Status</th>
+                    <th style="background:#5d3a21; color:white; padding:10px;">Action</th>
+                </tr>
             </thead>
             <tbody id="booksBody">
                 {% for book in books %}
-                <tr style="cursor: pointer;" onclick="showDesc('{{ book.description }}')">
-                    <td>{{ book.title }}</td>
-                    <td>{{ book.author }}</td>
-                    <td class="{% if book.status %}available{% else %}not-available{% endif %}">
+                <tr style="cursor: pointer; text-align: center; border-bottom: 1px solid #ddd;" onclick="showDesc('{{ book.description|escapejs }}')">
+                    <td style="padding: 10px;">{{ book.title }}</td>
+                    <td style="padding: 10px;">{{ book.author }}</td>
+                    <td style="padding: 10px; color:{% if book.status %}green{% else %}red{% endif %}; font-weight:bold;">
                         {% if book.status %} Available {% else %} Not Available {% endif %}
                     </td>
-                    <td>
-                        {% if book.status %}
-                            <button class="btn-borrow" style="background: #5d3a21; color: white; padding: 5px 10px; border: none; border-radius: 5px;">Borrow</button>
+                    <td style="padding: 10px;">
+                        {% if book.id in borrowed_ids %}
+                            <span style="color: orange; font-weight: bold;">Already Borrowed</span>
+                        {% elif book.status %}
+                            <form method="POST" action="{% url 'borrow_book' book.id %}" style="margin: 0;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-borrow" style="background: #5d3a21; color: white; padding: 5px 15px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Borrow</button>
+                            </form>
                         {% else %}
-                            <span style="color: gray;">Not Available</span>
+                            <span style="color: gray; font-weight: bold;">Not Available</span>
                         {% endif %}
                     </td>
                 </tr>
@@ -55,7 +72,7 @@
             </tbody>
         </table>
 
-        <div id="descBox" class="description-box" style="display: none; margin-top: 20px; padding: 15px; border: 1px solid #ccc; background: #f9f9f9;">
+        <div id="descBox" class="description-box" style="display: none; margin-top: 20px; padding: 15px; border: 1px solid #ccc; background: #f9f9f9; border-radius: 8px; color: #5d3a21; font-weight: bold;">
         </div>
     </div>
 
